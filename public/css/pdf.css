@@ -1,0 +1,140 @@
+.logo-reg-1-1 {
+    position: absolute;
+    top: 22px;
+    left: 245px;
+    width: 335px;
+    height: 52px;
+    object-fit: cover;
+  }
+  .you-have-mastered-the-success {
+    display: block;
+  }
+  .with-us-master {
+    text-decoration: underline;
+  }
+  .you-have-mastered-container {
+    margin: 0;
+    position: absolute;
+    top: 119px;
+    left: 220px;
+    font-size: 13px;
+    font-weight: 700;
+    white-space: pre-wrap;
+    text-align: right;
+    display: inline-block;
+    width: 360px;
+    height: 55px;
+  }
+  .our-services {
+    margin: 0;
+    position: absolute;
+    top: 258px;
+    left: 245px;
+    font-size: 16px;
+    text-decoration: underline;
+    font-weight: 700;
+    font-family: inherit;
+  }
+  .claims-management,
+  .general-insurance-placement,
+  .risk-analysis {
+    margin: 0;
+    position: absolute;
+    top: 292px;
+    left: 269px;
+    font-size: inherit;
+    font-weight: 600;
+    font-family: inherit;
+  }
+  .claims-management,
+  .general-insurance-placement {
+    top: 358px;
+    left: 306px;
+  }
+  .claims-management {
+    top: 325px;
+    left: 290px;
+  }
+  .clients {
+    display: block;
+    font-size: 24px;
+    color: #f7b610;
+  }
+  .trusted-by-clients-container1 {
+    line-break: anywhere;
+    width: 100%;
+  }
+  .trusted-by-clients-container {
+    margin: 0;
+    position: absolute;
+    top: 684px;
+    left: 321px;
+    font-weight: 800;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    width: 272px;
+    height: 85px;
+    font-size: 20px;
+  }
+  .component-2-child {
+    position: absolute;
+    height: 87.5%;
+    width: 100%;
+    top: 6.25%;
+    right: 0;
+    bottom: 6.25%;
+    left: 0;
+    background-color: #000008;
+  }
+  .mutual-global-insurance {
+    margin: 0;
+  }
+  .mutual-global-insurance-container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+  }
+  .component-2 {
+    position: absolute;
+    top: 812px;
+    left: 0;
+    width: 595px;
+    height: 32px;
+    text-align: center;
+    font-size: 8px;
+    color: #f8f9fc;
+  }
+  .icon-1,
+  .r-img-1-icon {
+    position: absolute;
+    top: 119px;
+    left: 0;
+    width: 282px;
+    height: 565px;
+    object-fit: cover;
+  }
+  .r-img-1-icon {
+    top: 634px;
+    left: 321px;
+    width: 272px;
+    height: 66px;
+  }
+  .template-a4 {
+    position: relative;
+    background-color: #fff;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    width: 100%;
+    height: 842px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 15px;
+    color: #000;
+    font-family: Inter;
+  }
+  
