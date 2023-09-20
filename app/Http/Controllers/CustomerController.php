@@ -316,7 +316,7 @@ class CustomerController extends Controller
         // session()->set('success','Item is successfully created.');  
 
 
-        return redirect('/customers')->with('success', 'Customer added successfully ! ');
+        return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
     }
 
     public function searchCustomers(Request $request)
@@ -357,7 +357,7 @@ class CustomerController extends Controller
         $validatedData = $request->validated();
         $customer = Customer::findOrFail($id);
         $customer->update($validatedData);
-        return redirect()->route('customer.table')->with('success', 'Customer updated successfully!');
+        return redirect()->route('customer.index')->with('success', 'Customer updated successfully!');
     }
 
     // pdf generate
