@@ -24,15 +24,6 @@
             role="alert">
             {{-- <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">Alert</span> --}}
             <span class="font-semibold mr-2 text-left flex-auto">{{ Session::get('error') }}</span>
-            <div id="closeIcon"
-                class="cursor-pointer">
-                <svg class="fill-current opacity-75 h-4 w-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20">
-                    <path
-                        d="M5.293 5.293a1 1 0 011.414 0L10 8.586l3.293-3.293a1 1 0 111.414 1.414L11.414 10l3.293 3.293a1 1 0 01-1.414 1.414L10 11.414l-3.293 3.293a1 1 0 01-1.414-1.414L8.586 10 5.293 6.707a1 1 0 010-1.414z" />
-                </svg>
-            </div>
         </div>
     </div>
 @endif
@@ -42,12 +33,6 @@
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Login
         </h2>
-        <!-- <p class="mt-2 text-center text-sm text-gray-600 max-w">
-            Or
-            <a href="#" class="font-medium text-blue-600 hover:text-blue-500">
-                create an account
-            </a>
-        </p> -->
     </div>
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
