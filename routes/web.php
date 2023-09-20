@@ -21,16 +21,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [LoginController::class, 'showLogin'])->name('showLogin');
+Route::get('/', function () {
+    return redirect(route('login'));
+});
+
+Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/dologin', [LoginController::class, 'doLogin'])->name('doLogin');
 
-// Route::middleware('adminOrEmployee')->group(function () {
+
+Route::middleware('adminOrEmployee')->group(function () {
 
     Route::get('/logout',[LoginController::class, 'logOut'])->name('logOut');
-    Route::view('/customer', 'customer')->name('target.route.name');
-    Route::get('/quote', [CustomerController::class, 'quote']);
-    Route::view('/insurer', 'insurer');
 
+    Route::get('/quote', [CustomerController::class, 'quote'])->name('fire.quoteGenerate');
+
+    Route::get('/customer', [CustomerController::class, 'addCustomerForm'])->name('customer.add');
     Route::get('/customers-list', [CustomerController::class, 'index'])->name('customer.index');
     Route::post('/customers', [CustomerController::class, 'store'])->name('customer.store');
     Route::delete('/customers/{id}', [CustomerController::class, 'destroyCustomre'])->name('customer.destroy');
@@ -39,11 +44,6 @@ Route::post('/dologin', [LoginController::class, 'doLogin'])->name('doLogin');
 
 
     Route::get('/search-items', [CustomerController::class, 'search'])->name('search.items');
-
-
-
-
-    // Route::post('/search-customers', [CustomerController::class, 'searchCustomers']);
 
     Route::get('/view/{id}', [CustomerController::class, 'getCustomers'])->name('customer.view');
 
@@ -93,4 +93,4 @@ Route::post('/dologin', [LoginController::class, 'doLogin'])->name('doLogin');
 
     Route::get('/closer-quote/{id}', [QuoteCloserController::class, 'quoteGet'])->name('closer-quote');;
     Route::post('/closer-quote', [QuoteCloserController::class, 'policyStore'])->name('closer-quote-post');;
-// });
+});

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Session;
 
 class LoginService
 {
-    public function doLogin($data, $remember = null, $adminRequest = false)
+    public function doLogin($data)
     {
         $remember = $data->remember_me ?? false;
 
@@ -37,7 +37,12 @@ class LoginService
             cookie()->forget('password');
         }
 
-        if ($adminRequest && !$user->hasRole('admin')) {
+        // if ($adminRequest && !$user->hasRole('admin')) {
+        //     Auth::logout();
+        //     return back()->with('error', 'You do not have the required role to access this page.');
+        // }
+
+         if (!$user->hasRole('admin') && !$user->hasRole('employee')) {
             Auth::logout();
             return back()->with('error', 'You do not have the required role to access this page.');
         }

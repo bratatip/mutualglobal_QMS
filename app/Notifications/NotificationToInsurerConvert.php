@@ -56,7 +56,6 @@ class NotificationToInsurerConvert extends Notification
         $message = (new MailMessage)
             ->cc($ccEmails)
             ->line('The introduction to the notification.');
-            // ->action('Notification Action', url('/'));
 
         foreach ($attachmentPath as $attachmentPath) {
             $message->attach(storage_path('app/' . $attachmentPath));
