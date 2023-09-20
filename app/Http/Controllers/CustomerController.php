@@ -320,7 +320,7 @@ class CustomerController extends Controller
         // session()->set('success','Item is successfully created.');  
 
 
-        return redirect()->route('customers.index')->with('success', 'Customer added successfully!');
+        return redirect()->route('customer.index')->with('success', 'Customer added successfully!');
     }
 
     // public function searchCustomers(Request $request)
