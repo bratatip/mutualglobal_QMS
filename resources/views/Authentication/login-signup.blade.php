@@ -2,6 +2,58 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 
+@if ($errors->any())
+    <div class="text-red-500 text-xs mt-2">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if (Session::has('success'))
+    <div class="text-green-500 text-xs mt-2">
+        {{ Session::get('success') }}
+    </div>
+@endif
+
+{{-- @if (Session::has('error'))
+<div class="text-red-500 text-xs mt-2 alert transition duration-500 ease-in-out">
+    {{ Session::get('error') }}
+</div>
+@endif --}}
+@if (Session::has('error'))
+    <div class="bg-transparent text-center py-4 lg:px-4">
+        {{-- <div class="bg-indigo-900 text-center py-4 lg:px-4"> --}}
+        <div class="p-2 bg-red-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+            role="alert">
+            <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">Alert</span>
+            <span class="font-semibold mr-2 text-left flex-auto">{{ Session::get('error') }}</span>
+            <svg class="fill-current opacity-75 h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20">
+                <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z" />
+            </svg>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        // Check if the error alert exists
+        const errorAlert = document.getElementById('error-alert');
+
+        if (errorAlert) {
+            // Automatically close the error alert after 10 seconds (10000 milliseconds)
+            setTimeout(() => {
+                errorAlert.style.display = 'none';
+            }, 10000);
+        }
+    </script>
+@endif
+
+
 <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -87,7 +139,9 @@
 
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 class="mt-6 text-center text-sm font-extrabold text-blue-900">
-            Mutual Global Insurance Broking Pvt Ltd 
+            Mutual Global Insurance Broking Pvt Ltd
         </h2>
     </div>
 </div>
+
+

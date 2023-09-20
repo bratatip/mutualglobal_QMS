@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', [CustomerController::class, 'index'])->name('customer.table');
 Route::get('/', [AuthController::class, 'loginUsers']);
-// Route::middleware('adminOrEmployee')->group(function () {
+Route::middleware('adminOrEmployee')->group(function () {
 
     Route::view('/customer', 'customer')->name('target.route.name');
     Route::get('/quote', [CustomerController::class, 'quote']);
@@ -96,4 +96,4 @@ Route::get('/', [AuthController::class, 'loginUsers']);
 
     Route::get('/closer-quote/{id}', [QuoteCloserController::class, 'quoteGet'])->name('closer-quote');;
     Route::post('/closer-quote', [QuoteCloserController::class, 'policyStore'])->name('closer-quote-post');;
-// });
+});
