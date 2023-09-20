@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function loginUsers(){
+    public function loginUsers()
+    {
+        // folder name changes
         return view('authentication.login-signup');
     }
 }
