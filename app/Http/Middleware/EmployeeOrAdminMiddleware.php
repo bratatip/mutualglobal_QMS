@@ -27,6 +27,8 @@ class EmployeeOrAdminMiddleware
                 return redirect()->to('/');
             }
         }
-        return abort(403, 'Unauthorized Access ! You may Reported to the server Admin !');
+        $errorMessage = "Unauthorized Access !  Please Do Contact With Admin ";
+        return redirect('/')->with('error', $errorMessage);
+        // return abort(403, 'Unauthorized Access ! You may Reported to the server Admin !');
     }
 }
