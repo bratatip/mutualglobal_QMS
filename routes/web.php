@@ -8,7 +8,6 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\QuoteCloserController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\QuoteConvertController;
-use App\Http\Livewire\Customer\CustomerList;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,22 +30,24 @@ Route::middleware('adminOrEmployee')->group(function () {
     Route::view('/customer', 'customer')->name('target.route.name');
     Route::get('/quote', [CustomerController::class, 'quote']);
     Route::view('/insurer', 'insurer');
+
     Route::get('/customers-list', [CustomerController::class, 'index'])->name('customer.index');
+    Route::post('/customers', [CustomerController::class, 'store'])->name('customer.store');
+    Route::delete('/customers/{id}', [CustomerController::class, 'destroyCustomre'])->name('customer.destroy');
+    Route::get('/customers/{id}/edit', [CustomerController::class, 'editCustomer'])->name('customer.edit');
+    Route::put('/customers/{id}', [CustomerController::class, 'updateCustomer'])->name('customer.update');
+
 
     Route::get('/search-items', [CustomerController::class, 'search'])->name('search.items');
 
 
 
-    Route::post('/customers', [CustomerController::class, 'store']);
 
     Route::get('/search-customers', [CustomerController::class, 'searchCustomers']);
 
     Route::get('/view/{id}', [CustomerController::class, 'getCustomers'])->name('customer.view');
 
-    Route::delete('/customers/{id}', [CustomerController::class, 'destroyCustomre'])->name('customer.destroy');
 
-    Route::get('/customers/{id}/edit', [CustomerController::class, 'editCustomer'])->name('customer.edit');
-    Route::put('/customers/{id}', [CustomerController::class, 'updateCustomer'])->name('customer.update');
 
     Route::post('/quote', [CustomerController::class, 'quoteStore'])->name('quote.generate');
     Route::get('/quote-edit/{id}', [CustomerController::class, 'quoteEdit'])->name('quote.edit');
