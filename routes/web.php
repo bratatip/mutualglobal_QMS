@@ -43,7 +43,7 @@ Route::middleware('adminOrEmployee')->group(function () {
 
 
 
-    Route::get('/search-customers', [CustomerController::class, 'searchCustomers']);
+    // Route::post('/search-customers', [CustomerController::class, 'searchCustomers']);
 
     Route::get('/view/{id}', [CustomerController::class, 'getCustomers'])->name('customer.view');
 
