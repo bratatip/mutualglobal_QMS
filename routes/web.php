@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExportToExcelController;
 use App\Http\Controllers\NotificationController;
@@ -28,9 +28,12 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // Route::get('/', [CustomerController::class, 'index'])->name('customer.table');
-Route::get('/', [AuthController::class, 'loginUsers']);
+Route::get('/', [LoginController::class, 'showLogin'])->name('showLogin');
+Route::post('/dologin', [LoginController::class, 'doLogin'])->name('doLogin');
+
 Route::middleware('adminOrEmployee')->group(function () {
 
+    Route::get('/logout',[LoginController::class, 'logOut'])->name('logOut');
     Route::view('/customer', 'customer')->name('target.route.name');
     Route::get('/quote', [CustomerController::class, 'quote']);
     Route::view('/insurer', 'insurer');
@@ -77,7 +80,6 @@ Route::middleware('adminOrEmployee')->group(function () {
     // TEST ROUTING
 
     Route::view('/test-add-quote', 'quote.quoteFire.quoteFire');
-    Route::get('/login', [AuthController::class, 'loginUsers'])->name('login');
 
     Route::get('/final-quote/{id}', [QuoteController::class, 'finalizeQuoteGet'])->name('finalize-quote');
     Route::post('/final-quote', [QuoteController::class, 'finalizeQuote'])->name('quote-finalize');

@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Helpers\UuidGeneratorHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller
+class AdminAuthController extends Controller
 {
-    public function loginUsers()
+    public function showLogin()
     {
         // folder name changes
         return view('authentication.login-signup');

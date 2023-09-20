@@ -18,27 +18,36 @@
     </div>
 @endif
 
-{{-- @if (Session::has('error'))
-<div class="text-red-500 text-xs mt-2 alert transition duration-500 ease-in-out">
-    {{ Session::get('error') }}
-</div>
-@endif --}}
 @if (Session::has('error'))
     <div class="bg-transparent text-center py-4 lg:px-4">
-        {{-- <div class="bg-indigo-900 text-center py-4 lg:px-4"> --}}
-        <div class="p-2 bg-red-800 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+        <div class="p-2 bg-red-600 items-center text-indigo-100 leading-none lg:rounded-md flex lg:inline-flex"
             role="alert">
-            <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">Alert</span>
+            {{-- <span class="flex rounded-full bg-red-500 uppercase px-2 py-1 text-xs font-bold mr-3">Alert</span> --}}
             <span class="font-semibold mr-2 text-left flex-auto">{{ Session::get('error') }}</span>
-            <svg class="fill-current opacity-75 h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20">
-                <path d="M12.95 10.707l.707-.707L8 4.343 6.586 5.757 10.828 10l-4.242 4.243L8 15.657l4.95-4.95z" />
-            </svg>
+            <div id="closeIcon"
+                class="cursor-pointer">
+                <svg class="fill-current opacity-75 h-4 w-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20">
+                    <path
+                        d="M5.293 5.293a1 1 0 011.414 0L10 8.586l3.293-3.293a1 1 0 111.414 1.414L11.414 10l3.293 3.293a1 1 0 01-1.414 1.414L10 11.414l-3.293 3.293a1 1 0 01-1.414-1.414L8.586 10 5.293 6.707a1 1 0 010-1.414z" />
+                </svg>
+            </div>
         </div>
     </div>
 @endif
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const closeIcon = document.getElementById('closeIcon');
+        if (closeIcon) {
+            closeIcon.addEventListener('click', function() {
+                const alertDiv = closeIcon.closest('.bg-red-600'); // Get the parent alert div
+                alertDiv.style.display = 'none'; // Hide the alert
+            });
+        }
+    });
+</script>
 
 <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
@@ -56,8 +65,9 @@
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form class="space-y-6"
-                action="#"
+                action="{{ route('doLogin') }}"
                 method="POST">
+                @csrf
                 <div>
                     <label for="email"
                         class="block text-sm font-medium text-gray-700">
@@ -129,5 +139,3 @@
         </h2>
     </div>
 </div>
-
-
