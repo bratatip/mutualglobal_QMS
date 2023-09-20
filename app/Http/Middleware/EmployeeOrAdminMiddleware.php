@@ -28,7 +28,7 @@ class EmployeeOrAdminMiddleware
             }
         }
         $errorMessage = "Unauthorized Access !  Please Do Contact With Admin ";
-        return redirect('/')->with('error', $errorMessage);
+        return back()->with('error', 'You do not have the required role to access this page.');
         // return abort(403, 'Unauthorized Access ! You may Reported to the server Admin !');
     }
 }

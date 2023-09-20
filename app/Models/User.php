@@ -18,10 +18,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'uuid',
+        'role_id',
         'name',
         'email',
+        'email_verified_at',
+        'phone',
         'password',
-    ];
+        
+    ]; 
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,4 +46,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role->name == $role;
+    }
 }

@@ -93,7 +93,7 @@
                 </ul>
             </div>
             <div class="flex items-center gap-6">
-                <a href="{{ route('login') }}" class="bg-[#ffc451] text-white px-5 py-2 rounded-full hover:bg-[#87acec]">Sign in</a>
+                <a href="{{ route('logOut') }}" class="bg-[#ffc451] text-white px-5 py-2 rounded-full hover:bg-[#87acec]">Log Out</a>
                 <ion-icon onclick="onToggleMenu(this)" name="menu" class="text-3xl cursor-pointer md:hidden"></ion-icon>
             </div>
         </nav>

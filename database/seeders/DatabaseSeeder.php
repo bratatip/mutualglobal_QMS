@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             'uuid' => UuidGeneratorHelper::generateUniqueUuidForTable('users'),
             'name' => 'Super Admin',
             'email' => env('SEEDER_ADMIN_EMAIL'),
+            'phone' => '1234567890',
             'password' => Hash::make(env('SEEDER_ADMIN_PASSWORD')),
             'role_id' => $adminRoleId,
             'created_at' => Carbon::now(),
