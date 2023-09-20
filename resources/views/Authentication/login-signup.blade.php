@@ -37,20 +37,6 @@
             </svg>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script>
-        // Check if the error alert exists
-        const errorAlert = document.getElementById('error-alert');
-
-        if (errorAlert) {
-            // Automatically close the error alert after 10 seconds (10000 milliseconds)
-            setTimeout(() => {
-                errorAlert.style.display = 'none';
-            }, 10000);
-        }
-    </script>
 @endif
 
 
