@@ -5,7 +5,7 @@
 
 <div class="flex justify-start ml-5 flex-row w-full">
     <div class="w-1/2 mt-3">
-        <a href="{{ route('target.route.name') }}" class="inline px-6 py-2 mt-3 ml-5 border border-solid rounded-sm bg-white text-xs text-[#0F628B] hover:bg-gray-100 ml-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold">
+        <a href="{{ route('customer.add') }}" class="inline px-6 py-2 mt-3 ml-5 border border-solid rounded-sm bg-white text-xs text-[#0F628B] hover:bg-gray-100 ml-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold">
             <span class="ml-1 mr-2"> +</span>Add Customer
         </a>
     </div>
@@ -78,19 +78,6 @@
             window.location.href = "/view/" + customerId;
         }
     });
-
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     const rows = document.querySelectorAll("tbody tr");
-
-    //     rows.forEach(row => {
-    //         row.addEventListener("click", function() {
-    //             const customerId = row.dataset.customerId;
-    //             if (customerId) {
-    //                 window.location.href = "/view/" + customerId;
-    //             }
-    //         });
-    //     });
-    // });
 
 </script>
 

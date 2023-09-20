@@ -1,7 +1,3 @@
-@vite('resources/css/app.css')
-<script src="https://cdn.tailwindcss.com"></script>
-
-
 @if ($errors->any())
     <div class="text-red-500 text-xs mt-2">
         <ul>
@@ -28,6 +24,9 @@
     </div>
 @endif
 
+<script src="https://cdn.tailwindcss.com"></script>
+
+
 <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -41,6 +40,8 @@
                 action="{{ route('doLogin') }}"
                 method="POST">
                 @csrf
+                @method('post')
+
                 <div>
                     <label for="email"
                         class="block text-sm font-medium text-gray-700">
@@ -86,7 +87,7 @@
                     </div>
 
                     <div class="text-sm">
-                        <a href="#"
+                        <a href="/"
                             class="font-medium text-blue-600 hover:text-blue-500">
                             Forgot your password?
                         </a>

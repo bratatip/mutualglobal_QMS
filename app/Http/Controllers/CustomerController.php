@@ -43,6 +43,10 @@ class CustomerController extends Controller
         }
     }
 
+    
+    public function addCustomerForm(){
+        return view('customer');
+    }
 
     // public function quote()
     // {

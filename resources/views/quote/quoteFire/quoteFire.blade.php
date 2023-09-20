@@ -4,7 +4,7 @@
     <div class="overflow-x-auto mb-5 w-11/12 border border-slate-400 border-solid shadow  rounded mx-auto"
         style="border-color: #CCCCCC !important;">
         <div class="flex flex-wrap justify-center bg-transparent py-3 px-3">
-            <form
+            <form action="{{ route('doLogin') }}"
                 method="POST"
                 class="w-full">
                 <div class="md:flex md:flex-row md:items-start align-top mb-6">
