@@ -12,7 +12,6 @@ class LoginController extends Controller
 {
     public function showLogin()
     {
-        // folder name changes
         return view('authentication.login-signup');
     }
 

@@ -21,13 +21,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// nnsadmin routes
 
-// Route::get('/', function () {
-//     return view('home');
-// });
-
-// Route::get('/', [CustomerController::class, 'index'])->name('customer.table');
 Route::get('/', [LoginController::class, 'showLogin'])->name('showLogin');
 Route::post('/dologin', [LoginController::class, 'doLogin'])->name('doLogin');
 
@@ -37,7 +31,7 @@ Route::middleware('adminOrEmployee')->group(function () {
     Route::view('/customer', 'customer')->name('target.route.name');
     Route::get('/quote', [CustomerController::class, 'quote']);
     Route::view('/insurer', 'insurer');
-    Route::get('/customers', [CustomerController::class, 'index'])->name('customer.table');
+    Route::get('/customers-list', [CustomerController::class, 'index'])->name('customer.index');
 
     Route::get('/search-items', [CustomerController::class, 'search'])->name('search.items');
 

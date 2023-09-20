@@ -43,7 +43,7 @@
 
 
             $.ajax({
-                url: '{{ route('customer.table') }}',
+                url: '{{ route('customer.index') }}',
                 method: 'GET',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'

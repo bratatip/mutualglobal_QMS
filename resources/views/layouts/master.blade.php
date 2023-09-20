@@ -60,7 +60,7 @@
                     <li class="relative group">
                         <a class="hover:text-[#ffc451] text-white" href="#">Customer</a>
                         <ul class="absolute hidden bg-neutral-700 text-white mt-2 py-2 rounded-md w-[150px] top-[50%] group-hover:block transition-opacity duration-300 ease-in-out">
-                            <li><a href="/customers" class="hover:text-[#ffc451]">Customer List</a></li>
+                            <li><a href="/customers-list" class="hover:text-[#ffc451]">Customer List</a></li>
                             <li><a href="#" class="hover:text-[#ffc451]">Customer .. </a></li>
                             <!-- Add more sub-menu items here -->
                         </ul>

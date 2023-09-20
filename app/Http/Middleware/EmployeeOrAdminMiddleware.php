@@ -20,15 +20,14 @@ class EmployeeOrAdminMiddleware
         if (Auth::check()) {
             if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('employee')) {
                 $user = auth()->user();
-                // return redirect()->route('customer.table');
+                // return redirect()->route('customer.index');
                 return $next($request);
             } else {
                 Auth::logout();
                 return redirect()->to('/');
             }
         }
-        $errorMessage = "Unauthorized Access !  Please Do Contact With Admin ";
-        return back()->with('error', 'You do not have the required role to access this page.');
-        // return abort(403, 'Unauthorized Access ! You may Reported to the server Admin !');
+        $errorMessage = "Unauthorized Access! Please contact the admin.";
+        return back()->with('error', $errorMessage);
     }
 }

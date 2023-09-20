@@ -46,12 +46,12 @@ class LoginService
             case 'admin':
                 // $redirectTo = '/admin/dashboard';
                 // $routeName = 'Admin.dashboard';
-                $redirectTo = '/customers';
-                $routeName = 'customer.table';
+                $redirectTo = '/customers-list';
+                $routeName = 'customer.index';
                 break;
             case 'employee':
-                $redirectTo = '/customers';
-                $routeName = 'customer.table';
+                $redirectTo = '/customers-list';
+                $routeName = 'customer.index';
                 break;
             case 'client':
                 $redirectTo = '/dummy/dashboard';
