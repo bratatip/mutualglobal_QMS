@@ -20,7 +20,6 @@ class EmployeeOrAdminMiddleware
         if (Auth::check()) {
             if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('employee')) {
                 $user = auth()->user();
-                // return redirect()->route('customer.index');
                 return $next($request);
             } else {
                 Auth::logout();
