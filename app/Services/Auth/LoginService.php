@@ -44,8 +44,6 @@ class LoginService
 
         switch ($user->role->name) {
             case 'admin':
-                // $redirectTo = '/admin/dashboard';
-                // $routeName = 'Admin.dashboard';
                 $redirectTo = '/customers-list';
                 $routeName = 'customer.index';
                 break;
@@ -53,12 +51,10 @@ class LoginService
                 $redirectTo = '/customers-list';
                 $routeName = 'customer.index';
                 break;
-            case 'client':
-                $redirectTo = '/dummy/dashboard';
-                $routeName = '/dummy/client.dashboard';
-                break;
             default:
                 Auth::logout();
+                // return redirect('/');
+
                 return back()->with('error', 'You do not have the required role to access this page.');
         }
 
