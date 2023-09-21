@@ -20,21 +20,15 @@ class LoginController extends Controller
         return $loginService->doLogin($request);
     }
 
-    // public function logOut(Request $request)
-    // {
-    //     Session::flush();
-
-    //     Auth::logout();
-
-    //     return redirect('/');
-    // }
-
-    public function logout(Request $request)
+    public function logOut(Request $request)
     {
-        $this->guard()->logout();
+        // Session::flush();
+
+        Auth::logout();
+
+        // return redirect('/');
 
         $request->session()->invalidate();
-
         return $this->loggedOut($request) ?: redirect('/');
     }
 }
