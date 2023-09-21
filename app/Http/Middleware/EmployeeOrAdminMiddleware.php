@@ -17,16 +17,16 @@ class EmployeeOrAdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
-            if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('employee')) {
-                $user = auth()->user();
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->hasRole('admin') || $user->hasRole('employee')) {
                 return $next($request);
             } else {
-                Auth::logout();
-                return redirect('/');
+                auth()->logout();
+                return redirect('/login');
             }
         }
         $errorMessage = "Unauthorized Access! Please contact the admin.";
-        return back()->with('error', $errorMessage);
+        return redirect('/')->with('error', $errorMessage);
     }
 }

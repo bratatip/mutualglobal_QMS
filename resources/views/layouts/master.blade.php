@@ -190,6 +190,19 @@
                 productsSubMenu.style.display = "none";
             });
         </script>
+
+
+        <script>
+            (function() {
+                if (window.history && window.history.pushState) {
+                    window.history.pushState('', null, '');
+                    window.onpopstate = function() {
+                        window.history.pushState('', null, '');
+                    };
+                }
+            })();
+        </script>
+
     </body>
 
 </html>

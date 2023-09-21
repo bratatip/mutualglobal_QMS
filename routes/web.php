@@ -33,6 +33,17 @@ Route::post('/dologin', [LoginController::class, 'doLogin'])->name('doLogin');
 
 Route::middleware('adminOrEmployee')->group(function () {
 
+    Route::middleware('admin')->prefix('admin')->group(function () {
+        Route::post('/import-content', [ExportToExcelController::class, 'importContent'])->name('importContents');
+        Route::get('/import-view', [ExportToExcelController::class, 'importView'])->name('importView');
+        Route::delete('/customers/{id}', [CustomerController::class, 'destroyCustomre'])->name('customer.destroy');
+        Route::get('/insurer-emails-management',[InsurerEmailsManagementController::class,'showForm'])->name('admin.insurer-emails-management-show');
+        Route::get('/add-riskoccupancy',[SettingsController::class,'addRiskOccupancy'])->name('admin.add-riskoccupancy');
+        Route::post('/import-riskoccupancy',[SettingsController::class,'storeRiskOccupancy'])->name('admin.store-riskoccupancy');
+    
+    });
+
+
     Route::get('/logout',[LoginController::class, 'logOut'])->name('logOut');
 
     Route::get('/quote', [CustomerController::class, 'quote'])->name('fire.quoteGenerate');
@@ -40,7 +51,6 @@ Route::middleware('adminOrEmployee')->group(function () {
     Route::get('/customer', [CustomerController::class, 'addCustomerForm'])->name('customer.add');
     Route::get('/customers-list', [CustomerController::class, 'index'])->name('customer.index');
     Route::post('/customers', [CustomerController::class, 'store'])->name('customer.store');
-    Route::delete('/customers/{id}', [CustomerController::class, 'destroyCustomre'])->name('customer.destroy');
     Route::get('/customers/{id}/edit', [CustomerController::class, 'editCustomer'])->name('customer.edit');
     Route::put('/customers/{id}', [CustomerController::class, 'updateCustomer'])->name('customer.update');
 
@@ -65,11 +75,7 @@ Route::middleware('adminOrEmployee')->group(function () {
     Route::get('/quote_list', [CustomerController::class, 'quoteList'])->name('quoteList');
 
     Route::get('/export-customer/{id}', [ExportToExcelController::class, 'exportToExcel'])->name('exportCustomer');
-    Route::post('/import-content', [ExportToExcelController::class, 'importContent'])->name('importContents');
-
-    Route::get('/import-view', [ExportToExcelController::class, 'importView'])->name('importView');
-
-
+   
     Route::get('/create-notification-form/{id}', [NotificationController::class, 'createNotificationForm'])->name('notificationForm');
     Route::post('/send-attachment-email', [NotificationController::class, 'sendNotification'])->name('send-attachment-email');
     Route::get('/get-emails', [NotificationController::class, 'getEmails'])->name('get-emails');
@@ -99,9 +105,5 @@ Route::middleware('adminOrEmployee')->group(function () {
     Route::post('/closer-quote', [QuoteCloserController::class, 'policyStore'])->name('closer-quote-post');
 
 
-    Route::prefix('admin')->group(function () {
-        Route::get('/insurer-emails-management',[InsurerEmailsManagementController::class,'showForm'])->name('admin.insurer-emails-management-show');
-        Route::get('/add-riskoccupancy',[SettingsController::class,'addRiskOccupancy'])->name('admin.add-riskoccupancy');
-        Route::post('/import-riskoccupancy',[SettingsController::class,'storeRiskOccupancy'])->name('admin.store-riskoccupancy');
-    });
+    
 });

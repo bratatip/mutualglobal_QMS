@@ -16,6 +16,16 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        if (auth()->check()) {
+            $user = auth()->user();
+            if ($user->hasRole('admin') ) {
+                return $next($request);
+            } else {
+                auth()->logout();
+                return redirect('/login');
+            }
+        }
+        $errorMessage = "Unauthorized Access! Please contact the admin.";
+        return redirect('/')->with('error', $errorMessage);
     }
 }

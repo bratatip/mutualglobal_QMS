@@ -9,6 +9,12 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class SettingsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     public function addRiskOccupancy()
     {
         return view('admin.settings.risk_occupancy');
