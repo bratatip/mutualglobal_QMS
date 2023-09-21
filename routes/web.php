@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\InsurerEmailsManagementController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExportToExcelController;
@@ -92,5 +94,12 @@ Route::middleware('adminOrEmployee')->group(function () {
     // Quote clouser
 
     Route::get('/closer-quote/{id}', [QuoteCloserController::class, 'quoteGet'])->name('closer-quote');;
-    Route::post('/closer-quote', [QuoteCloserController::class, 'policyStore'])->name('closer-quote-post');;
+    Route::post('/closer-quote', [QuoteCloserController::class, 'policyStore'])->name('closer-quote-post');
+
+
+    Route::prefix('admin')->group(function () {
+        Route::get('/insurer-emails-management',[InsurerEmailsManagementController::class,'showForm'])->name('admin.insurer-emails-management-show');
+        Route::get('/add-riskoccupancy',[SettingsController::class,'addRiskOccupancy'])->name('admin.add-riskoccupancy');
+        Route::post('/import-riskoccupancy',[SettingsController::class,'storeRiskOccupancy'])->name('admin.store-riskoccupancy');
+    });
 });
