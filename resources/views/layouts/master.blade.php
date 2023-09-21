@@ -158,6 +158,15 @@
         </footer>
 
 
+        {{-- Code for Reload the  page --}}
+        <script>
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    location.reload();
+                }
+            });
+        </script>
+
 
         <script>
             const navLinks = document.querySelector('.nav-links')
