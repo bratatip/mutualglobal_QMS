@@ -2,6 +2,7 @@
     "private": true,
     "scripts": {
         "watch": "vite build --watch",
+        "prebuild": "rm -rf public/build", 
         "dev": "vite",
         "build": "vite build"
     },

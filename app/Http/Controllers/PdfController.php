@@ -10,7 +10,7 @@ use App\Models\Customer;
 use App\Models\ProductCondition;
 use App\Models\ProductSection;
 use App\Models\QuoteFinalize;
-use App\Models\Riskoccupancy;
+use App\Models\RiskOccupancy;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Dompdf\Dompdf;

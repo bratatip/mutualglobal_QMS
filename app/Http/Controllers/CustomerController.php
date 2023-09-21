@@ -12,7 +12,7 @@ use App\Models\Insurer;
 use App\Models\PrimaryEmail;
 use App\Models\Product;
 use App\Models\QuoteGenerate;
-use App\Models\Riskoccupancy;
+use App\Models\RiskOccupancy;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use PDF;
@@ -295,7 +295,7 @@ class CustomerController extends Controller
     {
         $quote = QuoteGenerate::findOrFail($id);
         $customer = Customer::findOrFail($quote->customer_id);
-        $riskOccupancy = Riskoccupancy::findOrFail($quote->risk_occupancy_id);
+        $riskOccupancy = RiskOccupancy::findOrFail($quote->risk_occupancy_id);
         // dd($quote);
         return view('quote_view', compact('quote', 'customer', 'riskOccupancy'));
     }
