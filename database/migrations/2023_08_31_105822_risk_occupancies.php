@@ -18,9 +18,9 @@ return new class extends Migration
         Schema::create('risk_occupancies', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique()->nullable()->default(null);
-            $table->string('iib_code');
-            $table->string('risk_occupancy');
-            $table->string('risk_code');
+            $table->string('iib_code')->nullable()->default(null);
+            $table->text('risk_occupancy');
+            $table->string('risk_code')->nullable()->default(null);
             $table->timestamps();
         });
     }
