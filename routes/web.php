@@ -49,6 +49,8 @@ Route::middleware('adminOrEmployee')->group(function () {
 
     Route::get('/view/{id}', [CustomerController::class, 'getCustomers'])->name('customer.view');
 
+    // search for autopopulate customers
+    Route::get('/search-customers', [CustomerController::class, 'searchCustomers']);
 
 
     Route::post('/quote', [CustomerController::class, 'quoteStore'])->name('quote.generate');

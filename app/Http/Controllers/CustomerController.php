@@ -323,16 +323,16 @@ class CustomerController extends Controller
         return redirect()->route('customer.index')->with('success', 'Customer added successfully!');
     }
 
-    // public function searchCustomers(Request $request)
-    // {
-    //     $query = $request->input('q');
+    public function searchCustomers(Request $request)
+    {
+        $query = $request->input('q');
 
-    //     // Replace with actual customer data retrieval logic
-    //     $matchingCustomers = Customer::where('name', 'LIKE', '%' . $query . '%')->get();
-    //     return response()->json([
-    //         'data' => $matchingCustomers
-    //     ]);
-    // }
+        // Replace with actual customer data retrieval logic
+        $matchingCustomers = Customer::where('name', 'LIKE', '%' . $query . '%')->get();
+        return response()->json([
+            'data' => $matchingCustomers
+        ]);
+    }
 
     public function getCustomers($id)
     {
