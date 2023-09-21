@@ -20,6 +20,13 @@ use Ramsey\Uuid\Uuid;
 
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('admin')->only('restrictedMethod');
+        $this->middleware('adminOrEmployee');
+        $this->middleware('admin')->only('destroyCustomre');
+
+    }
 
     public function index(Request $request)
     {
@@ -43,8 +50,9 @@ class CustomerController extends Controller
         }
     }
 
-    
-    public function addCustomerForm(){
+
+    public function addCustomerForm()
+    {
         return view('customer');
     }
 
