@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\InsurerEmailsManagementController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Auth\LoginController;
@@ -40,7 +41,10 @@ Route::middleware('adminOrEmployee')->group(function () {
         Route::get('/insurer-emails-management',[InsurerEmailsManagementController::class,'showForm'])->name('admin.insurer-emails-management-show');
         Route::get('/add-riskoccupancy',[SettingsController::class,'addRiskOccupancy'])->name('admin.add-riskoccupancy');
         Route::post('/import-riskoccupancy',[SettingsController::class,'storeRiskOccupancy'])->name('admin.store-riskoccupancy');
-    
+        
+        # Admin Employees Routes
+        Route::get('/create-employee',[EmployeeController::class, 'createEmployee'])->name('admin.createEmployee');
+        Route::post('/store-employee',[EmployeeController::class, 'storeEmployee'])->name('admin.storeEmployee');
     });
 
 

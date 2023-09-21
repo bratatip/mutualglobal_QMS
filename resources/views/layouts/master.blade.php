@@ -109,7 +109,7 @@
                         </li>
                         <li>
                             <a class="hover:text-[#ffc451]  text-white"
-                                href="#">Developers</a>
+                                href="{{ route('admin.createEmployee') }}">AddEmployee</a>
                         </li>
                         <li>
                             <a class="hover:text-[#ffc451]  text-white"
