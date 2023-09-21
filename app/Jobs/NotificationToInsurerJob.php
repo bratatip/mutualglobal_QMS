@@ -21,7 +21,7 @@ class NotificationToInsurerJob implements ShouldQueue
     protected $ccEmails;
     protected $emailSubject;
     protected $emailBody;
-    protected $attachmentPath;
+    protected $attachmentPath; 
 
 
     /**
