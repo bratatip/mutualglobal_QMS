@@ -48,10 +48,11 @@ class PdfController extends Controller
 
 
             $productSectionName = ProductSection::pluck('name')->toArray();
-            $quote = QuoteGenerate::findOrFail($id);
+            $quote = QuoteGenerate::with('user')->findOrFail($id);
             $customer = Customer::findOrFail($quote->customer_id);
             $riskOccupancy = RiskOccupancy::findOrFail($quote->risk_occupancy_id);
             $finalizedInsurers = $quote->quoteFinalize;
+
             if (!$finalizedInsurers->isEmpty()) {
                 $insurerNames = [];
 

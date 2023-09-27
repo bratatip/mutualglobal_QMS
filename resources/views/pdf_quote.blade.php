@@ -192,7 +192,7 @@
         <td><strong>Policy Period</strong></td>
         <td>12 Months</td>
         <td><strong>RM</strong></td>
-        <td>{{ $customer->name }}</td>
+        <td>{{ $quote->user->name }}</td>
       </tr>
 
       <tr>
@@ -482,7 +482,7 @@
     @endforeach
     @endif
     <tr>
-      <th colspan="4" style=" background: #F7B610; color: white;text-align: center;"><strong>End of The Quote; Quote released by {{ $customer->name }} </strong></th>
+      <th colspan="4" style=" background: #F7B610; color: white;text-align: center;"><strong>End of The Quote; Quote released by {{ auth()->user()->name }} </strong></th>
     </tr>
     </tbody>
 
