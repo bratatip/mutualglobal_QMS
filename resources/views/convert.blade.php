@@ -62,7 +62,7 @@
                         <label class=" text-[#0F628B] ml-3 text-sm">Net OD Premium</label>
                     </div>
                     <div>
-                        <input type="number" id="net_od_premium" name="net_od_premium[]" class="net-od-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00" inputmode="decimal">
+                        <input type="number" id="net_od_premium" name="net_od_premium[]" class="net-od-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00" inputmode="numeric" step="any">
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
                         <label class=" text-[#0F628B] ml-3 text-sm">Net Terrorism Premium</label>
                     </div>
                     <div>
-                        <input type="number" id="net_terrorism_premium" name="net_terrorism_premium[]" class="net-terrorism-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="decimal">
+                        <input type="number" id="net_terrorism_premium" name="net_terrorism_premium[]" class="net-terrorism-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="numeric" step="any">
                     </div>
                 </div>
 
@@ -80,7 +80,7 @@
                         <label class=" text-[#0F628B] ml-3 text-sm">GST %</label>
                     </div>
                     <div>
-                        <input type="number" id="gst" name="gst[]" class="gst h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " placeholder="0.00" min="0" max="18" oninput="validity.valid||(value='');" inputmode="decimal">
+                        <input type="number" id="gst" name="gst[]" class="gst h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " placeholder="0.00" min="0" max="18" oninput="validity.valid||(value='');" inputmode="numeric" step="any">
                     </div>
                 </div>
 
@@ -89,7 +89,7 @@
                         <label class="text-[#0F628B] ml-3 text-sm">Gross Premium</label>
                     </div>
                     <div>
-                        <input type="number" id="gross_premium" name="gross_premium[]" class="total-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="decimal">
+                        <input type="number" id="gross_premium" name="gross_premium[]" class="total-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="numeric" step="any">
                     </div>
                 </div>
 
@@ -98,7 +98,7 @@
                         <label class="text-[#0F628B] ml-3 text-sm">Brokerage Amount</label>
                     </div>
                     <div>
-                        <input type="number" name="brokerage_amount[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="decimal">
+                        <input type="number" name="brokerage_amount[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="numeric" step="any">
                     </div>
                 </div>
 
@@ -107,7 +107,7 @@
                         <label class="text-[#0F628B] ml-3 text-sm">Reward Brokerage </label>
                     </div>
                     <div>
-                        <input type="number" name="brokerage_rewards[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="decimal">
+                        <input type="number" name="brokerage_rewards[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="numeric" step="any">
                     </div>
                 </div>
             </div>
@@ -166,7 +166,7 @@
                         <label class="text-[#0F628B] ml-3 text-sm">Amount </label>
                     </div>
                     <div>
-                        <input type="number" name="transaction_amount[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="decimal" disabled>
+                        <input type="number" name="transaction_amount[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="numeric" step="any" disabled>
                     </div>
                 </div>
 
@@ -222,7 +222,7 @@
                         <label class="text-[#0F628B] ml-3 text-sm">Amount </label>
                     </div>
                     <div>
-                        <input type="number" name="transaction_amount[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="decimal" disabled>
+                        <input type="number" name="transaction_amount[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="numeric" step="any" disabled>
                     </div>
                 </div>
 
@@ -274,7 +274,7 @@
                         <label class="text-[#0F628B] ml-3 text-sm">Amount </label>
                     </div>
                     <div>
-                        <input type="number" name="transaction_amount[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="decimal" disabled>
+                        <input type="number" name="transaction_amount[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="numeric" step="any" disabled>
                     </div>
                 </div>
 
@@ -390,7 +390,7 @@
                         <label class=" text-[#0F628B] ml-3 text-sm">Net OD Premium</label>
                     </div>
                     <div>
-                        <input type="number" id="net_od_premium" name="net_od_premium[]" class="net-od-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00" inputmode="decimal">
+                        <input type="number" id="net_od_premium" name="net_od_premium[]" class="net-od-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00" inputmode="numeric" step="any"">
                     </div>
                 </div>
 
@@ -399,7 +399,7 @@
                         <label class=" text-[#0F628B] ml-3 text-sm">Net Terrorism Premium</label>
                     </div>
                     <div>
-                        <input type="number" id="net_terrorism_premium" name="net_terrorism_premium[]" class="net-terrorism-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="decimal">
+                        <input type="number" id="net_terrorism_premium" name="net_terrorism_premium[]" class="net-terrorism-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="numeric" step="any"">
                     </div>
                 </div>
 
@@ -408,7 +408,7 @@
                         <label class=" text-[#0F628B] ml-3 text-sm">GST %</label>
                     </div>
                     <div>
-                        <input type="number" id="gst" name="gst[]" class="gst h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " placeholder="0.00" min="0" max="18" oninput="validity.valid||(value='');" inputmode="decimal">
+                        <input type="number" id="gst" name="gst[]" class="gst h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " placeholder="0.00" min="0" max="18" oninput="validity.valid||(value='');" inputmode="numeric" step="any"">
                     </div>
                 </div>
 
@@ -417,7 +417,7 @@
                         <label class="text-[#0F628B] ml-3 text-sm">Gross Premium</label>
                     </div>
                     <div>
-                        <input type="number" id="gross_premium" name="gross_premium[]" class="total-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="decimal">
+                        <input type="number" id="gross_premium" name="gross_premium[]" class="total-premium h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="numeric" step="any"">
                     </div>
                 </div>
 
@@ -426,7 +426,7 @@
                         <label class="text-[#0F628B] ml-3 text-sm">Brokerage Amount</label>
                     </div>
                     <div>
-                        <input type="number" name="brokerage_amount[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="decimal">
+                        <input type="number" name="brokerage_amount[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="numeric" step="any"">
                     </div>
                 </div>
 
@@ -435,7 +435,7 @@
                         <label class="text-[#0F628B] ml-3 text-sm">Reward Brokerage </label>
                     </div>
                     <div>
-                        <input type="number" name="brokerage_rewards[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="decimal">
+                        <input type="number" name="brokerage_rewards[]" class="h-8 p-1 ml-3 w-11/12 border-[#CCCCCC] border-1  dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs" placeholder="0.00 " inputmode="numeric" step="any"">
                     </div>
                 </div>
             </div>

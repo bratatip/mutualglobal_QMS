@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\UuidGeneratorHelper;
 use App\Http\Requests\CustomerRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -9,10 +10,12 @@ use Illuminate\Validation\Rule;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\Insurer;
+use App\Models\Policy;
 use App\Models\PrimaryEmail;
 use App\Models\Product;
 use App\Models\QuoteGenerate;
 use App\Models\RiskOccupancy;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use PDF;
@@ -25,7 +28,6 @@ class CustomerController extends Controller
         // $this->middleware('admin')->only('restrictedMethod');
         $this->middleware('adminOrEmployee');
         $this->middleware('admin')->only('destroyCustomre');
-
     }
 
     public function index(Request $request)
@@ -67,18 +69,23 @@ class CustomerController extends Controller
 
     public function quote($id = null)
     {
+        // $productId = Product::where('uuid', '=', $id)->pluck('id')->first();
+        $productId = $id;
         $occupancies = RiskOccupancy::all();
-        $employees = Employee::all();
+        $employees = User::join('roles', 'users.role_id', '=', 'roles.id')
+            ->whereIn('roles.name', ['admin', 'employee'])
+            ->select('users.uuid', 'users.name', 'users.email', 'users.phone')
+            ->get();
         $products = Product::all();
+        $quoteData = new QuoteGenerate();
+        // if ($id !== null) {
+        //     $quoteData = QuoteGenerate::with('customer', 'riskOccupancy')->find($id);
+        // } else {
+        //     // If $id is null, it's a fresh input, so create an empty $quoteData
+        //     $quoteData = new QuoteGenerate();
+        // }
 
-        if ($id !== null) {
-            $quoteData = QuoteGenerate::with('customer', 'riskOccupancy')->find($id);
-        } else {
-            // If $id is null, it's a fresh input, so create an empty $quoteData
-            $quoteData = new QuoteGenerate();
-        }
-
-        return view('quote', compact('occupancies', 'employees', 'products', 'quoteData'));
+        return view('quote', compact('occupancies', 'employees', 'products', 'quoteData', 'productId'));
     }
 
 
@@ -87,7 +94,10 @@ class CustomerController extends Controller
         $quoteData = QuoteGenerate::with('customer', 'riskOccupancy')->find($id);
         // dd($quoteData->riskOccupancy->risk_occupancy);
         $occupancies = RiskOccupancy::all();
-        $employees = Employee::all();
+        $employees = User::join('roles', 'users.role_id', '=', 'roles.id')
+            ->whereIn('roles.name', ['admin', 'employee'])
+            ->select('users.uuid', 'users.name', 'users.email', 'users.phone')
+            ->get();
         $products = Product::all();
         return view('quote', compact('occupancies', 'employees', 'products', 'quoteData'));
     }
@@ -154,6 +164,8 @@ class CustomerController extends Controller
         try {
             $validatedData = $request->validate([
                 'customer_id' => 'required',
+                'product_id' => 'required',
+                'rm_id' => 'required',
                 'risk_location' => 'required',
                 'risk_occupancy_id' => 'required',
                 'policy_type' => 'required',
@@ -180,6 +192,16 @@ class CustomerController extends Controller
                 'total_sum_insured' => 'required',
                 'terrorism' => 'nullable',
             ]);
+
+            $productId = Product::where('uuid', '=', $validatedData['product_id'])->pluck('id')->first() ?? null;
+            $customerId = Customer::where('uuid', '=', $validatedData['customer_id'])->pluck('id')->first() ?? null;
+            $riskOccupancyId = RiskOccupancy::where('uuid', '=', $validatedData['risk_occupancy_id'])->pluck('id')->first() ?? null;
+            $rmId = User::where('uuid', '=', $validatedData['rm_id'])->pluck('id')->first() ?? null;
+
+            $validatedData['product_id'] = $productId;
+            $validatedData['customer_id'] = $customerId;
+            $validatedData['risk_occupancy_id'] = $riskOccupancyId;
+            $validatedData['rm_id'] = $rmId;
 
             // Check if an 'id' or 'quote_id' field is present in the request
             // $quoteId = $request->input('customer_id') ?: $request->input('quote_id');
@@ -322,8 +344,13 @@ class CustomerController extends Controller
         //     'gst' => 'nullable|unique:customers,gst',
         // ]);
 
-
+        $lastCustomer = Customer::latest()->first();
+        $nextCustomerId = $lastCustomer
+            ? str_pad($lastCustomer->customer_id + 1, strlen($lastCustomer->customer_id), '0', STR_PAD_LEFT)
+            : '001';
         $validatedData = $request->validated();
+        $validatedData['uuid'] = UuidGeneratorHelper::generateUniqueUuidForTable('customers');
+        $validateData['customer_id'] = $nextCustomerId;
         Customer::create($validatedData);
         // session()->set('success','Item is successfully created.');  
 
@@ -372,5 +399,20 @@ class CustomerController extends Controller
         return redirect()->route('customer.index')->with('success', 'Customer updated successfully!');
     }
 
-    // pdf generate
+    public function quoteAutopopulateOnRenew(Request $request)
+    {
+        $query = $request->input('q');
+        $policyData = Policy::join('quote_generate', 'policies.policiable_id', '=', 'quote_generate.id')
+            ->select('policies.policy_number', 'quote_generate.*')
+            ->where('policies.policy_number', 'LIKE', '%' . $query . '%')
+            ->get();
+            // ->toArray();
+
+
+        // $policiableData = $policyData[0]['policiable'];
+
+        return response()->json([
+            'data' => $policyData
+        ]);
+    }
 }

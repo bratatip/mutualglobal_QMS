@@ -114,7 +114,7 @@ class NotificationController extends Controller
     {
         $selectedInsurerIds  = $request->input('insurerIds');
         $productId = $request->input('productId');
-
+        
         $toEmails = [];
         $ccEmails = [];
         $emailData = [];

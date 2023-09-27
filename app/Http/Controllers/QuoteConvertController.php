@@ -48,7 +48,7 @@ class QuoteConvertController extends Controller
             ->where('paymentable_id', $convertableId)
             ->exists()
         ) {
-            return response()->json(['message' => 'Unauthorize Access'], 400);
+            return redirect()->back()->with('error', 'Unauthorize Access !');
         }
 
 
@@ -64,7 +64,7 @@ class QuoteConvertController extends Controller
 
             // Ensure that insurer_id and share_in_percentage have the same number of elements
             if (count($request->insurer_id) !== count($request->share_in_percentage)) {
-                return response()->json(['message' => 'Invalid data'], 400);
+                return redirect()->back()->with('error', 'Invalid Data !');
             }
 
             $convertedInsurers = [];
@@ -174,12 +174,12 @@ class QuoteConvertController extends Controller
                 $customerName = str_replace(' ', '', strtolower($quoteGenerate->customer->name));
                 $fileName = $customerName . '_' . $documentType . '_' . Uuid::uuid4()->toString() . '.' . $uploadedFile->getClientOriginalExtension();
                 // $filePath = $uploadedFile->store('uploaded_files'); 
-                $filePath = $uploadedFile->storeAs('uploaded_files', $fileName); 
+                $filePath = $uploadedFile->storeAs('uploaded_files', $fileName);
 
 
                 $filesData[] = [
                     'uuid' => Uuid::uuid4()->toString(),
-                    'fileable_type' => get_class($quoteGenerate), 
+                    'fileable_type' => get_class($quoteGenerate),
                     'fileable_id' => $quoteGenerate->id,
                     'document_type' => $documentType,
                     'file_path' => $filePath,
@@ -193,11 +193,11 @@ class QuoteConvertController extends Controller
 
             DB::commit();
 
-            return response()->json(['message' => 'Data successfully saved'], 200);
+            return redirect()->back()->with('success', 'Quote Converted Successfully !');
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e->getMessage());
-            return response()->json(['message' => 'Error saving data'], 500);
+            // dd($e->getMessage());
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 }

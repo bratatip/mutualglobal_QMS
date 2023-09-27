@@ -45,12 +45,28 @@ Route::middleware('adminOrEmployee')->group(function () {
         # Admin Employees Routes
         Route::get('/create-employee',[EmployeeController::class, 'createEmployee'])->name('admin.createEmployee');
         Route::post('/store-employee',[EmployeeController::class, 'storeEmployee'])->name('admin.storeEmployee');
+        
+        # Product And Category Management Routes
+        Route::get('/manage-products',[SettingsController::class, 'manageProducts'])->name('admin.manageProducts');
+        Route::post('/store-category',[SettingsController::class, 'storeCategory'])->name('admin.storeCategory');
+        Route::post('/delete-category',[SettingsController::class, 'destroyCategory'])->name('admin.destroyCategory');
+        Route::post('/store-products',[SettingsController::class, 'storeProducts'])->name('admin.storeProducts');
+        Route::post('/delete-products',[SettingsController::class, 'destroyCategory'])->name('admin.destroyProducts');
+
+
+        #  Insurers and Emails Management Routes
+        Route::get('/manage-insurers',[SettingsController::class,'manageInsurersAndEmails'])->name('admin.manageInsurersAndEmails');
+        Route::post('/add-insurers',[SettingsController::class,'storeInsurers'])->name('admin.storeInsurers');
+        Route::post('/add-emails',[SettingsController::class,'storeEmails'])->name('admin.storeEmails');
+
+        Route::post('/add-productSections',[SettingsController::class,'storeProductSections'])->name('admin.storeProductSections');
+
     });
 
 
     Route::get('/logout',[LoginController::class, 'logOut'])->name('logOut');
 
-    Route::get('/quote', [CustomerController::class, 'quote'])->name('fire.quoteGenerate');
+    Route::get('/quote/{uuid}', [CustomerController::class, 'quote'])->name('fire.quoteGenerate');
 
     Route::get('/customer', [CustomerController::class, 'addCustomerForm'])->name('customer.add');
     Route::get('/customers-list', [CustomerController::class, 'index'])->name('customer.index');
@@ -66,6 +82,8 @@ Route::middleware('adminOrEmployee')->group(function () {
     // search for autopopulate customers
     Route::get('/search-customers', [CustomerController::class, 'searchCustomers']);
 
+    // search for autopopulate on renew customer
+    Route::get('/search-quote', [CustomerController::class, 'quoteAutopopulateOnRenew'])->name('search.quoteAutopopulate');
 
     Route::post('/quote', [CustomerController::class, 'quoteStore'])->name('quote.generate');
     Route::get('/quote-edit/{id}', [CustomerController::class, 'quoteEdit'])->name('quote.edit');
@@ -84,7 +102,8 @@ Route::middleware('adminOrEmployee')->group(function () {
     Route::post('/send-attachment-email', [NotificationController::class, 'sendNotification'])->name('send-attachment-email');
     Route::get('/get-emails', [NotificationController::class, 'getEmails'])->name('get-emails');
 
-
+    # Routes for CAR PRODUCTS
+    Route::view('/car-quoteGenerate','quoteFire')->name('car.quoteGenerate');
 
     // TEST ROUTING
 

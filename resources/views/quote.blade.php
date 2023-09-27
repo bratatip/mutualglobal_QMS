@@ -313,6 +313,11 @@
             </div>
         @endif
 
+        @if (Session::has('error'))
+            <div class="text-green-500 text-xs mt-2">
+                {{ Session::get('error') }}
+            </div>
+        @endif
 
 
         <div class="card mt-5 mb-5 mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
@@ -338,11 +343,15 @@
                                 <div id="nameSuggestions"
                                     class="suggestions"></div>
                             </div>
-                            <input type="text"
+                            <input type="hidden"
+                                name="product_id"
+                                id="product_id"
+                                value="{{ old('name', $productId ?? $quoteData->product->uuid) }}"
+                                readonly>
+                            <input type="hidden"
                                 name="customer_id"
                                 id="customer_id"
-                                value="{{ old('name', $quoteData->customer->id ?? '') }}"
-                                hidden>
+                                value="{{ old('name', $quoteData->customer->uuid ?? '') }}">
                             <input type="text"
                                 name="quote_id"
                                 id="quote_id"
@@ -366,7 +375,7 @@
                                 </label>
                                 <input type="text"
                                     class="form-control underline-input"
-                                    id="customerName"
+                                    id="riskLocation"
                                     name="risk_location"
                                     value="{{ old('name', $quoteData->risk_location ?? '') }}">
                             </div>
@@ -386,7 +395,7 @@
                                         disabled>Select an option...</option>
 
                                     @foreach ($occupancies as $occupancy)
-                                        <option value="{{ $occupancy->id }}"
+                                        <option value="{{ $occupancy->uuid }}"
                                             data-risk-code="{{ $occupancy->risk_code }}"
                                             data-iib-code="{{ $occupancy->iib_code }}">
                                             {{ $occupancy->risk_occupancy }}
@@ -423,7 +432,8 @@
                                 disabled>Select ...</option>
 
                             @foreach ($employees as $employee)
-                                <option value="{{ $employee->id }}">{{ $employee->name }} - [{{ $employee->phone }}]
+                                <option value="{{ $employee->uuid }}">{{ $employee->name }} -
+                                    [{{ $employee->phone }}]
                                 </option>
                             @endforeach
                         </select>
@@ -506,6 +516,9 @@
                             class="form-control underline-input"
                             id="renewPolicyNo"
                             name="renewPolicyNo">
+
+                        <div id="policySuggestions"
+                            class="policyRenewSuggestions"></div>
                     </div>
 
                 </div>
@@ -594,6 +607,7 @@
                         <input type="text"
                             class="form-control inline-input sum-field"
                             value="{{ old('buildings_and_other_structural_work', $quoteData->buildings_and_other_structural_work) }}"
+                            id="buildings_and_other_structural_work"
                             name="buildings_and_other_structural_work"
                             {{ $quoteData->buildings_and_other_structural_work != 0 ? '' : 'disabled' }}>
 
@@ -607,14 +621,15 @@
                         Plant & machines
                         <input type="text"
                             class="form-control sum-field"
+                            id="plants_and_machines"
                             name="plants_and_machines"
                             value="{{ old('plants_and_machines', $quoteData->plants_and_machines) }}"
                             {{ old('plants_and_machines', $quoteData->plants_and_machines) != 0 ? '' : 'disabled' }}>
                         <div class="additional-sub-field"
                             style="{{ old('plants_and_machines', $quoteData->plants_and_machines) != 0 ? '' : 'display: none;' }}">
-                            <label for="additionalInput">MBD</label>
+                            <label>MBD</label>
                             <input type="text"
-                                id="additionalInput"
+                                id="mbd"
                                 name="mbd"
                                 value="{{ old('mbd', $quoteData->mbd) }}"
                                 class="form-control ml-2"
@@ -631,6 +646,7 @@
                         Electrical Fittings
                         <input type="text"
                             class="form-control sum-field"
+                            id="electrical_fittings"
                             name="electrical_fittings"
                             value="{{ old('electrical_fittings', $quoteData->electrical_fittings) }}"
                             {{ old('electrical_fittings', $quoteData->electrical_fittings) != 0 ? '' : 'disabled' }}>
@@ -638,8 +654,8 @@
                             style="{{ old('electrical_fittings', $quoteData->electrical_fittings) != 0 ? '' : 'display: none;' }}">
                             <label for="additionalInput">EEI</label>
                             <input type="text"
-                                id="additionalInput"
                                 class="form-control ml-2"
+                                id="eei"
                                 name="eei"
                                 value="{{ old('eei', $quoteData->eei) }}"
                                 {{ old('eei', $quoteData->eei) != 0 ? '' : 'disabled' }}>
@@ -657,6 +673,7 @@
                         Computer & all movables
                         <input type="text"
                             class="form-control sum-field"
+                            id="computer_and_all_movables"
                             name="computer_and_all_movables"
                             value="{{ old('computer_and_all_movables', $quoteData->computer_and_all_movables) }}"
                             {{ $quoteData->computer_and_all_movables != 0 ? '' : 'disabled' }}>
@@ -670,6 +687,7 @@
                         furniture fixtures & Fittings
                         <input type="text"
                             class="form-control sum-field"
+                            id="furniture_and_fittings"
                             name="furniture_and_fittings"
                             value="{{ old('furniture_and_fittings', $quoteData->furniture_and_fittings) }}"
                             {{ $quoteData->furniture_and_fittings != 0 ? '' : 'disabled' }}>
@@ -684,6 +702,7 @@
                         stocks in process
                         <input type="text"
                             class="form-control sum-field"
+                            id="stock_in_process"
                             name="stock_in_process"
                             value="{{ old('stock_in_process', $quoteData->stock_in_process) }}"
                             {{ $quoteData->stock_in_process != 0 ? '' : 'disabled' }}>
@@ -700,6 +719,7 @@
                         finished good
                         <input type="text"
                             class="form-control sum-field"
+                            id="finished_good"
                             name="finished_good"
                             value="{{ old('finished_good', $quoteData->finished_good) }}"
                             {{ $quoteData->finished_good != 0 ? '' : 'disabled' }}>
@@ -713,6 +733,7 @@
                         Fassade glaces
                         <input type="text"
                             class="form-control sum-field"
+                            id="fassade_glasses"
                             name="fassade_glasses"
                             value="{{ old('fassade_glasses', $quoteData->fassade_glasses) }}"
                             {{ old('fassade_glasses', $quoteData->fassade_glasses) != 0 ? '' : 'disabled' }}>
@@ -720,8 +741,8 @@
                             style="{{ old('fassade_glasses', $quoteData->fassade_glasses) != 0 ? '' : 'display: none;' }}">
                             <label for="additionalInput">PGI</label>
                             <input type="text"
-                                id="additionalInput"
                                 class="form-control ml-2"
+                                id="pgi"
                                 name="pgi"
                                 value="{{ old('pgi', $quoteData->pgi) }}"
                                 {{ old('pgi', $quoteData->pgi) != 0 ? '' : 'disabled' }}>
@@ -736,6 +757,7 @@
                         Loss of Rent
                         <input type="text"
                             class="form-control"
+                            id="loss_of_rent"
                             name="loss_of_rent"
                             value="{{ old('loss_of_rent', $quoteData->loss_of_rent) }}"
                             {{ old('loss_of_rent', $quoteData->loss_of_rent) != 0 ? '' : 'disabled' }}>
@@ -743,8 +765,8 @@
                             style="{{ old('loss_of_rent', $quoteData->loss_of_rent) != 0 ? '' : 'display: none;' }}">
                             <label for="additionalInput">No of months</label>
                             <input type="text"
-                                id="additionalInput"
                                 class="form-control ml-2"
+                                id="no_of_months_loss"
                                 name="no_of_months_loss"
                                 value="{{ old('no_of_months_loss', $quoteData->no_of_months_loss) }}"
                                 {{ old('no_of_months_loss', $quoteData->no_of_months_loss) != 0 ? '' : 'disabled' }}>
@@ -761,6 +783,7 @@
                         Business interuption
                         <input type="text"
                             class="form-control"
+                            id="business_interuption"
                             name="business_interuption"
                             value="{{ old('business_interuption', $quoteData->business_interuption) }}"
                             {{ old('business_interuption', $quoteData->business_interuption) != 0 ? '' : 'disabled' }}>
@@ -769,8 +792,8 @@
                             style="{{ old('business_interuption', $quoteData->business_interuption) != 0 ? '' : 'display: none;' }}">
                             <label for="additionalInput">No of months</label>
                             <input type="text"
-                                id="additionalInput"
                                 class="form-control ml-2"
+                                id="bi_no_of_months"
                                 name="bi_no_of_months"
                                 value="{{ old('bi_no_of_months', $quoteData->bi_no_of_months) }}"
                                 {{ old('bi_no_of_months', $quoteData->bi_no_of_months) != 0 ? '' : 'disabled' }}>
@@ -979,7 +1002,7 @@
                                 return customer.name === selectedName;
                             });
                             $('#customerAddress').val(selectedCustomer.address);
-                            $('#customer_id').val(selectedCustomer.id);
+                            $('#customer_id').val(selectedCustomer.uuid);
                             $('#customerAddress').prop('readonly', true);
                             // $('#nameSuggestions').hide();
                         });
@@ -999,6 +1022,312 @@
 
         });
     </script>
+
+    {{-- Renewal   Auot Popolate --}}
+    <script>
+        $(document).ready(function() {
+
+            $('#renewPolicyNo').on('input', function() {
+                var inputText = $(this).val();
+                // $('#customerAddress').val('').prop('readonly', false);
+
+                // if (inputText === '') {
+                //     $('#nameSuggestions').hide();
+                //     return;
+                // }
+
+                $.ajax({
+                    url: '/search-quote',
+                    method: 'GET',
+                    data: {
+                        q: inputText
+                    },
+                    success: function(response) {
+                        var suggestions = response.data;
+
+                        var suggestionsHtml = '';
+                        for (var i = 0; i < suggestions.length; i++) {
+                            suggestionsHtml += '<div class="suggestionRenew">' + suggestions[i]
+                                .policy_number + '</div>';
+                        }
+                        $('#policySuggestions').html(suggestionsHtml);
+                        $('#policySuggestions').show();
+
+                        $('.suggestionRenew').on('mouseenter', function() {
+                            var selectedPolicyNumber = $(this).text();
+                            $('#renewPolicyNo').val(selectedPolicyNumber);
+
+                            var selectedPolicy = suggestions.find(function(policy) {
+                                return policy.policy_number ===
+                                    selectedPolicyNumber;
+                            });
+                            $('#riskLocation').val(selectedPolicy.risk_location);
+
+                            if (selectedPolicy.buildings_and_other_structural_work !==
+                                0) {
+                                $('#checkbox1').prop('checked', true);
+                                $('#buildings_and_other_structural_work')
+                                    .prop('disabled', false)
+                                    .val(selectedPolicy
+                                        .buildings_and_other_structural_work);
+                            } else {
+                                $('#checkbox1').prop('checked', false);
+                            }
+
+
+                            if (selectedPolicy.plants_and_machines !==
+                                0) {
+                                $('#checkbox2').prop('checked', true);
+                                $('#plants_and_machines')
+                                    .prop(
+                                        'disabled', false)
+                                    .val(
+                                        selectedPolicy
+                                        .plants_and_machines);
+
+                                if (selectedPolicy.mbd !==
+                                    0) {
+                                    $('#mbd')
+                                        .closest('.additional-sub-field')
+                                        .show()
+                                        .end()
+                                        .prop('disabled', false)
+                                        .val(selectedPolicy.mbd);
+                                }
+                            } else {
+                                $('#checkbox2').prop('checked', false);
+
+                                $('#plants_and_machines')
+                                    .prop('disabled', true)
+                                    .val('');
+
+                                $('#mbd')
+                                    .closest('.additional-sub-field')
+                                    .hide()
+                                    .end()
+                                    .prop('disabled', true)
+                                    .val('');
+                            }
+
+                            if (selectedPolicy.electrical_fittings !==
+                                0) {
+                                $('#checkbox3').prop('checked', true);
+                                $('#electrical_fittings')
+                                    .prop(
+                                        'disabled', false)
+                                    .val(
+                                        selectedPolicy
+                                        .electrical_fittings);
+
+                                if (selectedPolicy.eei !==
+                                    0) {
+                                    $('#eei')
+                                        .closest('.additional-sub-field')
+                                        .show()
+                                        .end()
+                                        .prop('disabled', false)
+                                        .val(selectedPolicy.mbd);
+                                }
+                            } else {
+                                $('#checkbox3').prop('checked', false);
+
+                                $('#electrical_fittings')
+                                    .prop('disabled', true)
+                                    .val('');
+
+                                $('#eei')
+                                    .closest('.additional-sub-field')
+                                    .hide()
+                                    .end()
+                                    .prop('disabled', true)
+                                    .val('');
+                            }
+
+                            if (selectedPolicy.computer_and_all_movables !==
+                                0) {
+                                $('#checkbox4').prop('checked', true);
+                                $('#computer_and_all_movables')
+                                    .prop('disabled', false)
+                                    .val(selectedPolicy
+                                        .computer_and_all_movables);
+                            } else {
+                                $('#checkbox4').prop('checked', false);
+                                $('#computer_and_all_movables')
+                                    .prop('disabled', true)
+                                    .val('');
+                            }
+
+                            if (selectedPolicy.furniture_and_fittings !==
+                                0) {
+                                $('#checkbox5').prop('checked', true);
+                                $('#furniture_and_fittings')
+                                    .prop('disabled', false)
+                                    .val(selectedPolicy
+                                        .furniture_and_fittings);
+                            } else {
+                                $('#checkbox5').prop('checked', false);
+                                $('#furniture_and_fittings')
+                                    .prop('disabled', true)
+                                    .val('');
+                            }
+
+
+                            if (selectedPolicy.stock_in_process !==
+                                0) {
+                                $('#checkbox6').prop('checked', true);
+                                $('#stock_in_process')
+                                    .prop('disabled', false)
+                                    .val(selectedPolicy
+                                        .stock_in_process);
+                            } else {
+                                $('#checkbox6').prop('checked', false);
+                                $('#stock_in_process')
+                                    .prop('disabled', true)
+                                    .val('');
+                            }
+
+                            if (selectedPolicy.finished_good !==
+                                0) {
+                                $('#checkbox7').prop('checked', true);
+                                $('#finished_good')
+                                    .prop('disabled', false)
+                                    .val(selectedPolicy
+                                        .finished_good);
+                            } else {
+                                $('#checkbox7').prop('checked', false);
+                                $('#finished_good')
+                                    .prop('disabled', true)
+                                    .val('');
+                            }
+
+
+                            if (selectedPolicy.fassade_glasses !==
+                                0) {
+                                $('#checkbox8').prop('checked', true);
+                                $('#fassade_glasses')
+                                    .prop(
+                                        'disabled', false)
+                                    .val(
+                                        selectedPolicy
+                                        .fassade_glasses);
+
+                                if (selectedPolicy.eei !==
+                                    0) {
+                                    $('#pgi')
+                                        .closest('.additional-sub-field')
+                                        .show()
+                                        .end()
+                                        .prop('disabled', false)
+                                        .val(selectedPolicy.pgi);
+                                }
+                            } else {
+                                $('#checkbox8').prop('checked', false);
+
+                                $('#fassade_glasses')
+                                    .prop('disabled', true)
+                                    .val('');
+
+                                $('#pgi')
+                                    .closest('.additional-sub-field')
+                                    .hide()
+                                    .end()
+                                    .prop('disabled', true)
+                                    .val('');
+                            }
+
+
+                            if (selectedPolicy.loss_of_rent !==
+                                0) {
+                                $('#checkbox9').prop('checked', true);
+                                $('#loss_of_rent')
+                                    .prop(
+                                        'disabled', false)
+                                    .val(
+                                        selectedPolicy
+                                        .loss_of_rent);
+
+                                if (selectedPolicy.no_of_months_loss !==
+                                    0) {
+                                    $('#no_of_months_loss')
+                                        .closest('.additional-sub-field')
+                                        .show()
+                                        .end()
+                                        .prop('disabled', false)
+                                        .val(selectedPolicy.no_of_months_loss);
+                                }
+                            } else {
+                                $('#checkbox9').prop('checked', false);
+
+                                $('#loss_of_rent')
+                                    .prop('disabled', true)
+                                    .val('');
+
+                                $('#no_of_months_loss')
+                                    .closest('.additional-sub-field')
+                                    .hide()
+                                    .end()
+                                    .prop('disabled', true)
+                                    .val('');
+                            }
+
+
+
+                            if (selectedPolicy.business_interuption !==
+                                0) {
+                                $('#checkbox10').prop('checked', true);
+                                $('#business_interuption')
+                                    .prop(
+                                        'disabled', false)
+                                    .val(
+                                        selectedPolicy
+                                        .loss_of_rent);
+
+                                if (selectedPolicy.bi_no_of_months !==
+                                    0) {
+                                    $('#bi_no_of_months')
+                                        .closest('.additional-sub-field')
+                                        .show()
+                                        .end()
+                                        .prop('disabled', false)
+                                        .val(selectedPolicy.bi_no_of_months);
+                                }
+                            } else {
+                                $('#checkbox10').prop('checked', false);
+
+                                $('#business_interuption')
+                                    .prop('disabled', true)
+                                    .val('');
+
+                                $('#bi_no_of_months')
+                                    .closest('.additional-sub-field')
+                                    .hide()
+                                    .end()
+                                    .prop('disabled', true)
+                                    .val('');
+                            }
+
+
+
+                        });
+                    }
+                });
+            });
+
+            $('#renewPolicyNo').on('focusout', function() {
+                suggestionsTimeout = setTimeout(function() {
+                    $('#policySuggestions').hide();
+                }, 200);
+            });
+
+            $('#policySuggestions').on('mouseenter', function() {
+                clearTimeout(suggestionsTimeout);
+            });
+
+        });
+    </script>
+
+
+
 
     <!-- Risk Occupancy -->
 

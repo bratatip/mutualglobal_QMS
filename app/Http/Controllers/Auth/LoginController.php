@@ -12,6 +12,7 @@ class LoginController extends Controller
 {
     public function showLogin()
     {
+        Auth::logout();
         return view('authentication.login-signup');
     }
 
@@ -25,9 +26,8 @@ class LoginController extends Controller
         Session::flush();
 
         Auth::logout();
-        
+
         $request->session()->invalidate();
         return redirect('/');
-
     }
 }
