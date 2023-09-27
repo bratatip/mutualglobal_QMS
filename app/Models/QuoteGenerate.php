@@ -95,4 +95,9 @@ class QuoteGenerate extends Model
     {
         return $this->morphMany(Policy::class, 'policiable');
     }
+
+    public function convertedquote()
+    {
+        return $this->morphMany(FireQuoteConverted::class, 'firepremiable');
+    }
 }

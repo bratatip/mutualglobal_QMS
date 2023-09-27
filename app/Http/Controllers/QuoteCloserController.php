@@ -17,8 +17,9 @@ class QuoteCloserController extends Controller
     {
 
         $quoteId = $id;
-        $quotegenerateData = QuoteGenerate::find($id);
+        $quotegenerateData = QuoteGenerate::with('convertedquote')->find($id);
         $relatedData = $quotegenerateData->convertedInsurer;
+        $premiumData = $quotegenerateData->convertedquote;
 
         $isConverted = $quotegenerateData->quoteFinalize->isNotEmpty() ? $quotegenerateData->quoteFinalize : null;
 
@@ -31,17 +32,24 @@ class QuoteCloserController extends Controller
             ->orderBy('name', 'asc')
             ->get();
 
-        if (!$relatedData->isEmpty()) {
+        if (!$relatedData->isEmpty() && !$premiumData->isEmpty()) {
 
             // Initialize an array to store insurer names
             $insurerNames = [];
-
+            $premiumInfo = [];
             foreach ($relatedData as $convertedInsurer) {
                 // Access the insurer relationship to get the insurer's name
                 $insurerName = $convertedInsurer->insurer->name; // Assuming "name" is the column in your "Insurer" model for the insurer's name.
                 $insurerNames[] = $insurerName;
             }
-            return view('closer', compact('insurerNames', 'relatedData', 'products', 'quoteId'));
+
+            foreach ($premiumData as $data) {
+                // Access the insurer relationship to get the insurer's name
+                $premiuminfo = $data->gross_premium; // Assuming "name" is the column in your "Insurer" model for the insurer's name.
+                $premiumInfo[] = $premiuminfo;
+            }
+
+            return view('closer', compact('insurerNames', 'relatedData', 'premiumInfo', 'products', 'quoteId', 'quotegenerateData'));
             // Now you have an array of insurer names in $insurerNames variable.
             // You can use it as needed.
         } else {

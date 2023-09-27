@@ -28,19 +28,20 @@ class ProductConditionImport implements ToCollection
         DB::beginTransaction();
         try {
             foreach ($rows as $row) {
-                ProductCondition::create([
+                $conditions = ProductCondition::create([
                     'product_id' => $this->product_id,
                     'product_section_id' => $this->product_section_id,
                     'product_sub_section_id' => $this->product_sub_section_id,
-                    'content' => $row[0], // Assuming the content is in the first column
-                    // Other fields as needed
+                    'content' => $row[0],
                 ]);
             }
 
-            DB::commit(); // Commit the transaction
+            DB::commit();
+
+            return $conditions;
         } catch (\Exception $e) {
-            DB::rollBack(); // Roll back the transaction if an exception occurs
-            return back()->with('error', $e->getMessage());
+            DB::rollBack();
+            throw $e;
         }
     }
 }

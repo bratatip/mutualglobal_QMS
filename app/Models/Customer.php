@@ -15,4 +15,9 @@ class Customer extends Model
     protected $fillable = [
         'uuid','customer_id','name', 'email', 'address','zip_code','contact_person_phone','contact_person_name', 'pan','gst'
     ];
+
+    public function quoteGenerates()
+    {
+        return $this->hasMany(QuoteGenerate::class);
+    }
 }
