@@ -97,12 +97,16 @@
             </ul>
         </div>
 
-
+        <div class="flex mr-2 items-center">
+            <i class='fas fa-user-circle'
+                style='font-size:medium;color:white'> {{ auth()->user()->name }}</i>
+        </div>
 
 
         <div class="flex items-center gap-6">
             <a href="{{ route('logOut') }}"
-                class="bg-[#ffc451] text-white px-5 py-2 rounded-full hover:bg-[#87acec]">Log Out</a>
+                class="bg-[#ffc451] text-white px-5 py-2 rounded-full hover:bg-[#87acec]"><i class="fa fa-power-off"
+                    aria-hidden="true"></i></a>
             <ion-icon onclick="onToggleMenu(this)"
                 name="menu"
                 class="text-3xl cursor-pointer md:hidden"></ion-icon>
