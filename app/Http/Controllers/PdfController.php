@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\DeleteTempFileJob;
+use App\Jobs\NotificationToCustomerFinalJob;
 use Illuminate\Http\Request;
 use PDF;
 use Illuminate\Support\Facades\View;
@@ -17,12 +19,15 @@ use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Storage;
 
 class PdfController extends Controller
 {
-    public function generatePDF($id)
+    public function generatePDF(Request $request, $id)
     {
         try {
+            $condition = $request->query('condition');
 
             $quote = QuoteGenerate::with(['user', 'product'])->findOrFail($id);
             $productConditionsBurglary = ProductCondition::whereHas('product', function ($query) use ($quote) {
@@ -105,7 +110,27 @@ class PdfController extends Controller
                 'finalizedInsurers' => $finalizedInsurers
             ]);
 
-            return $pdf->download($fileName, ['Attachment' => false]);
+            if ($condition === 'true') {
+                try {
+                    $tempPdfPath = 'temp_attachments/' . $fileName;
+                    Storage::put($tempPdfPath, $pdf->output());
+
+                    $toEmail = is_array($quote->customer->email) ? implode(', ', $quote->customer->email) : $quote->customer->email;
+                    $attachmentPaths = $tempPdfPath;
+                    
+                    dispatch(new NotificationToCustomerFinalJob($toEmail, $attachmentPaths));
+
+                    Queue::later(now()->addSeconds(120), new DeleteTempFileJob($tempPdfPath));
+
+                    return back();
+                    // Storage::delete($tempPdfPath);
+                } catch (\Exception $e) {
+                    $errorMessage = $e->getMessage();
+                    return back()->with('error', $errorMessage);
+                }
+            } else {
+                return $pdf->download($fileName, ['Attachment' => false]);
+            }
         } catch (\Exception $e) {
             $errorMessage = $e->getMessage();
             return back()->with('error', $errorMessage);
