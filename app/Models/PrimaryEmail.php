@@ -9,6 +9,12 @@ class PrimaryEmail extends Model
 {
     use HasFactory;
 
+    protected $table = 'primary_emails';
+
+    protected $fillable = [
+        'uuid', 'email','insurer_id',
+    ];
+
     public function insurer() {
         return $this->belongsTo(Insurer::class);
     }

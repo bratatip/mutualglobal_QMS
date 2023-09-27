@@ -91,7 +91,8 @@ class PdfController extends Controller
             // Handle the exception here
             // For example, you can log the error and return a user-friendly error message or redirect
             // You can also customize this part based on your error handling requirements
-            return Response::json(['error' => $e->getMessage()], 500);
+            return redirect()->back()->with('error', $e->getMessage());
+
         }
     }
 }

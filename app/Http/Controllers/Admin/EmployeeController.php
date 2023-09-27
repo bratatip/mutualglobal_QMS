@@ -33,14 +33,8 @@ class EmployeeController extends Controller
             $registration->register($validatedData, $role);
 
             return back()->with('success', 'User  Created Successfully !');
-
-            // return response()->json(['message' => 'Employee registration successful'], 200);
-        } catch (ValidationException $e) {
-            throw $e;
-            // return response()->json(['errors' => $e->errors()], 400);
         } catch (\Exception $e) {
-            throw $e;
-            // return response()->json(['message' => 'An error occurred during registration'], 500);
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 }

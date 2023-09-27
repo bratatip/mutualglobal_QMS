@@ -19,27 +19,14 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique()->nullable()->default(null);
             $table->string('name')->unique();
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
+
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade');
         });
-
-        DB::table('products')->insert([
-            ['name' => 'FIRE'],
-            ['name' => 'CAR'],
-            ['name' => 'EAR'],
-            ['name' => 'CPM'],
-            ['name' => 'Marine'],
-            ['name' => 'Liability'],
-            ['name' => 'WC'],
-            ['name' => 'Motor'],
-            ['name' => 'GHI'],
-        ]);
-
-        $products = DB::table('products')->get();
-
-        foreach ($products as $product) {
-            $uuid = Uuid::uuid4()->toString();
-            DB::table('products')->where('id', $product->id)->update(['uuid' => $uuid]);
-        }
     }
 
     /**
@@ -49,6 +36,9 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropForeign(['category_id']);
+        });
         Schema::dropIfExists('products');
     }
 };

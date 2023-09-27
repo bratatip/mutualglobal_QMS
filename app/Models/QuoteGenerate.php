@@ -15,6 +15,8 @@ class QuoteGenerate extends Model
 
     protected $fillable = [
         'customer_id',
+        'product_id',
+        'rm_id',
         'uuid',
         'quote_no',
         'risk_location',
@@ -43,6 +45,11 @@ class QuoteGenerate extends Model
         'total_sum_insured',
         'terrorism',
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 
     public function customer()
     {

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->bigInteger('net_od_premium');
             $table->bigInteger('net_terrorism_premium');
             $table->integer('gst');
-            $table->integer('gross_premium');
+            $table->bigInteger('gross_premium');
             $table->timestamps();
         });
     }

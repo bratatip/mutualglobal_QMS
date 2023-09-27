@@ -18,6 +18,8 @@ return new class extends Migration
             $table->uuid('uuid')->unique()->nullable()->default(null);
             $table->string('quote_no');
             $table->integer('customer_id');
+            $table->integer('product_id');
+            $table->integer('rm_id');
             $table->string('risk_location');
             $table->integer('risk_occupancy_id');
 

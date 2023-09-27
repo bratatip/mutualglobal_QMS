@@ -58,7 +58,7 @@ class QuoteCloserController extends Controller
             'policy_start_date' => 'required|string',
             'policy_end_date' => 'required|string',
             'product_id' => 'required|integer',
-            'premium_amount' => 'required|integer',
+            'premium_amount' => 'required|numeric',
             'file.*' => 'required|file|mimes:pdf,doc,docx',
         ]);
 
@@ -119,12 +119,12 @@ class QuoteCloserController extends Controller
 
 
             DB::commit();
-
-            return response()->json(['message' => 'Data successfully saved'], 200);
+            return redirect()->back()->with('success', 'Data successfully saved');
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e->getMessage());
-            return response()->json(['message' => 'Error saving data'], 500);
+            // dd($e->getMessage());
+            $errorMessage = $e->getMessage(); // Capture the error message
+            return back()->with('error', $errorMessage);
         }
     }
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique()->nullable()->default(null);
             $table->morphs('paymentable');
-            $table->bigInteger('transaction_number');
+            $table->string('transaction_number');
             $table->bigInteger('transaction_amount');
             $table->date('transaction_date');
             $table->string('transaction_mode');
