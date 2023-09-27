@@ -40,7 +40,7 @@ class ProductConditionImport implements ToCollection
             DB::commit(); // Commit the transaction
         } catch (\Exception $e) {
             DB::rollBack(); // Roll back the transaction if an exception occurs
-            throw $e; // Rethrow the exception
+            return back()->with('error', $e->getMessage());
         }
     }
 }

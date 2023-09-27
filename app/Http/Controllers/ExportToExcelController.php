@@ -32,11 +32,15 @@ class ExportToExcelController extends Controller
     }
 
     public function importContent(Request $request){
-        $product_id = $request->input('product_id');
-        $product_section_id = $request->input('product_section_id');
-        $product_sub_section_id = $request->input('product_sub_section_id');
-        $file = $request->file('excel_file');
+        $product_uuid = $request->input('product_id');
+        $product_section_uuid = $request->input('product_section_id');
+        $product_sub_section_uuid = $request->input('product_sub_section_id');
 
+        $product_id = Product::where('uuid', '=', $product_uuid)->pluck('id')->first();
+        $product_section_id = ProductSection::where('uuid', '=', $product_section_uuid)->pluck('id')->first();
+        $product_sub_section_id = ProductSubSection::where('uuid', '=', $product_sub_section_uuid)->pluck('id')->first();
+        $file = $request->file('excel_file');
+        
         Excel::import(new ProductConditionImport($product_id, $product_section_id, $product_sub_section_id), $file);
         return redirect()->back()->with('success', 'Data imported successfully.');
 
