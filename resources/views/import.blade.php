@@ -28,7 +28,7 @@
                             <option value="">Select Product Section</option>
                             @foreach ($productSections as $section)
                                 <option class="text-black"
-                                    value="{{ $section->id }}">{{ $section->name }}</option>
+                                    value="{{ $section->uuid }}">{{ $section->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -43,7 +43,7 @@
                             class="h-8 underline-input bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg text-gray-500 text-xs">
                             <option value="">Select Product Sub Section</option>
                             @foreach ($productSubSections as $subSection)
-                                <option value="{{ $subSection->id }}">{{ $subSection->name }}</option>
+                                <option value="{{ $subSection->uuid }}">{{ $subSection->name }}</option>
                             @endforeach
                         </select>
                     </div>
