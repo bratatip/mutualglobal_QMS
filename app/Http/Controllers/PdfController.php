@@ -48,10 +48,16 @@ class PdfController extends Controller
 
 
             $productSectionName = ProductSection::pluck('name')->toArray();
-            $quote = QuoteGenerate::with('user')->findOrFail($id);
+            $quote = QuoteGenerate::with(['user', 'product'])->findOrFail($id);
             $customer = Customer::findOrFail($quote->customer_id);
             $riskOccupancy = RiskOccupancy::findOrFail($quote->risk_occupancy_id);
             $finalizedInsurers = $quote->quoteFinalize;
+
+            $customerName = implode('', array_map('ucwords', explode(' ', $customer->name)));
+            $productName = implode('', array_map('ucwords', explode(' ', $quote->product->name)));
+
+            $fileName = "{$customerName}-{$productName}-quote.pdf";
+
 
             if (!$finalizedInsurers->isEmpty()) {
                 $insurerNames = [];
@@ -73,27 +79,11 @@ class PdfController extends Controller
                 'productSectionName' => $productSectionName,
                 'finalizedInsurers' => $finalizedInsurers
             ]);
-            // $pdfPath = storage_path('app\\temp_attachments\\quote_' . $quote->id . '.pdf');
-            // $pdf->save($pdfPath);
-            // $response = Response::json(['pdf_path' => $pdfPath]);
 
-            // File::delete($pdfPath);
-
-            // return $response;
-
-            // $pdf->getDomPDF()->set_option("isHtml5ParserEnabled", true);
-            // $pdf->getDomPDF()->set_option("isPhpEnabled", true);
-
-            // // Render the PDF as a response with appropriate headers
-
-            // return $pdf->stream('quote.pdf', ['Attachment' => false]);
-            return $pdf->download('quote.pdf', ['Attachment' => false]);
+            return $pdf->download($fileName, ['Attachment' => false]);
         } catch (\Exception $e) {
-            // Handle the exception here
-            // For example, you can log the error and return a user-friendly error message or redirect
-            // You can also customize this part based on your error handling requirements
-            return redirect()->back()->with('error', $e->getMessage());
-
+            $errorMessage = $e->getMessage();
+            return back()->with('error', $errorMessage);
         }
     }
 }

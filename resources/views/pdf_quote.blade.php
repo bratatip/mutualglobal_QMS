@@ -200,7 +200,6 @@
       </tr>
     </tbody>
 
-    @if($quote->buildings_and_other_structural_work !== "0")
     <tr>
       <td rowspan="11">
         <div class="rotate-text-container">
@@ -209,72 +208,53 @@
         <!-- <p id="rotate-text"><strong>Sum Insured Breakup </strong></p> -->
       </td>
       <td>Building Including all development works</td>
-      <td colspan="2">{{ $quote->buildings_and_other_structural_work }}</td>
+      <td colspan="2">{{ $quote->buildings_and_other_structural_work ?? 0 }}</td>
     </tr>
-    @endif
 
-    @if($quote->fassade_glasses !== "0")
     <tr>
       <td>Plate Glass</td>
-      <td colspan="2">{{ $quote->fassade_glasses }}</td>
+      <td colspan="2">{{ $quote->fassade_glasses ?? 0}}</td>
     </tr>
-    @endif
 
-    @if($quote->furniture_and_fittings !== "0")
     <tr>
       <td>Furniture, Fixture and Fittings</td>
-      <td colspan="2">{{ $quote->furniture_and_fittings }}</td>
+      <td colspan="2">{{ $quote->furniture_and_fittings ?? 0}}</td>
     </tr>
-    @endif
 
-    @if($quote->plants_and_machines !== "0")
     <tr>
       <td>Plant and Machinery </td>
-      <td colspan="2">{{ $quote->plants_and_machines }}</td>
+      <td colspan="2">{{ $quote->plants_and_machines ?? 0 }}</td>
     </tr>
-    @endif
 
-    @if($quote->electrical_fittings !== "0")
     <tr>
       <td>Electrical Fittings </td>
-      <td colspan="2">{{ $quote->electrical_fittings }}</td>
+      <td colspan="2">{{ $quote->electrical_fittings ?? 0}}</td>
     </tr>
-    @endif
 
-    @if($quote->stock_in_process !== "0")
     <tr>
       <td>Stocks in process </td>
-      <td colspan="2">{{ $quote->stock_in_process }}</td>
+      <td colspan="2">{{ $quote->stock_in_process ?? 0 }}</td>
     </tr>
-    @endif
 
-    @if($quote->finished_good !== "0")
     <tr>
       <td>Finished good </td>
-      <td colspan="2">{{ $quote->finished_good }}</td>
+      <td colspan="2">{{ $quote->finished_good ?? 0}}</td>
     </tr>
-    @endif
 
-    @if($quote->computer_and_all_movables !== "0")
     <tr>
       <td>Office Equipment Including Computers and Accessories </td>
-      <td colspan="2">{{ $quote->computer_and_all_movables }}</td>
+      <td colspan="2">{{ $quote->computer_and_all_movables ?? 0 }}</td>
     </tr>
-    @endif
 
-    @if($quote->loss_of_rent !== "0")
     <tr>
       <td>Loss of Rent </td>
-      <td colspan="2">{{ $quote->loss_of_rent }}</td>
+      <td colspan="2">{{ $quote->loss_of_rent ?? 0}}</td>
     </tr>
-    @endif
 
-    @if($quote->business_interuption !== "0")
     <tr>
       <td>Business interuption </td>
-      <td colspan="2">{{ $quote->business_interuption }}</td>
+      <td colspan="2">{{ $quote->business_interuption ?? 0}}</td>
     </tr>
-    @endif
 
 
 
@@ -340,17 +320,17 @@
 
     <tr>
       <td>Cash in safe</td>
-      <td colspan="2"></td>
+      <td colspan="2">{{$quote->cash_in_safe}}</td>
     </tr>
 
     <tr>
       <td>Cash in transit</td>
-      <td colspan="2"></td>
+      <td colspan="2">{{$quote->cash_in_transit}}</td>
     </tr>
 
     <tr>
       <td>Cash in counter</td>
-      <td colspan="2"></td>
+      <td colspan="2">{{$quote->cash_in_counter}}</td>
     </tr>
 
     <tr>
@@ -405,7 +385,7 @@
       <td colspan="4"><strong>Excess:</strong></td>
     </tr>
     @foreach ($productConditionsStandardFire as $condition)
-    @if ($condition !== "Terrorism cover excluded from the scope of cover")
+    @if ($condition != "Terrorism cover excluded from the scope of cover")
     <tr>
       <td colspan="4">{{ $condition }}</td>
     </tr>
@@ -428,7 +408,7 @@
     </tr>
 
     <!-- Buildings  -->
-    @if($quote->buildings_and_other_structural_work !== "0")
+    @if($quote->buildings_and_other_structural_work != "0" )
 
     <tr>
       <th colspan="4" style="background: #F7B610 ; color: white; text-align: left;"><strong>{{ $productSectionName[0] }}</strong></th>
@@ -448,7 +428,7 @@
     </tr>
 
     <!-- glasses -->
-    @if($quote->pgi !== "0")
+    @if($quote->pgi != "0")
 
     <tr>
       <th colspan="4" style=" background: #F7B610; color: white; text-align: left;"><strong>{{ $productSectionName[2] }}</strong></th>
@@ -468,7 +448,7 @@
     </tr>
     <!-- machines -->
 
-    @if($quote->mbd !== "0")
+    @if($quote->mbd != "0")
     <tr>
       <th colspan="4" style=" background: #F7B610; color: white;text-align: left;"><strong>{{ $productSectionName[1] }}</strong></th>
     </tr>
