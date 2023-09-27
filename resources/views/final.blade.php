@@ -197,8 +197,16 @@
                         class="inline px-6 py-2 mt-3 border text-green-500 border-solid rounded-2xl bg-white text-xs text-[#0F628B] hover:bg-gray-100 ml-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold">
                         <i class="fa fa-paper-plane"
                             aria-hidden="true"></i>
-                        Submit
+                        Save
                     </button>
+                </div>
+
+                <div class="w-full flex justify-end px-4 mb-3 max-md:w-full">
+                    <a href="{{ route('download-pdf', ['id' => $quoteId, 'condition' => 'true']) }}"
+                        id="mailPdfButton"
+                        class="logout_button block px-6 py-2 mt-3 border border-solid rounded-2xl text-orange-500 text-xs text-[#0F628B] hover:bg-gray-100 ml-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold ">
+                        Sent Mail
+                    </a>
                 </div>
             </form>
         </div>
