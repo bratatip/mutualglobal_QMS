@@ -21,16 +21,16 @@ class NotificationController extends Controller
 {
     public function createNotificationForm($id)
     {
+        $quoteInfo= QuoteGenerate::where('uuid', '=',$id)->first();
         $insurers = Insurer::get()->all();
-        $customerInfo = $id;
 
         // $templatePath = base_path('resources/views/admin/email/custom_notification.blade.php');
-        $templatePath = file_get_contents(resource_path('views//admin/email/custom_notification.blade.php'));
+        $templatePath = file_get_contents(resource_path('views/admin/email/custom_notification.blade.php'));
 
         $template = strip_tags($templatePath);
 
 
-        return view('notification-form', compact('customerInfo', 'insurers', 'template'));
+        return view('notification-form', compact('quoteInfo', 'insurers', 'template'));
     }
 
     public function sendNotification(Request $request)

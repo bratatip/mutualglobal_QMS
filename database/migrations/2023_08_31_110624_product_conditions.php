@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('product_id');
             $table->integer('product_section_id');
             $table->integer('product_sub_section_id');
-            $table->string('content');
+            $table->text('content');
             $table->timestamps();
         });
     }

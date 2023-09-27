@@ -41,13 +41,16 @@
                                 class="text-[#0F628B] text-sm">Total Premium<span class="text-red-600"></label>
                         </div>
                         <div>
-                            <input type="number"
-                                id="totalPremium"
-                                class="h-8 p-1 border-[#CCCCCC] border-1 focus:ring-0 focus:border-[#FFC451] focus:border-1 dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs"
-                                placeholder="Total Premium"
-                                value="12340900000"
-                                readonly>
-
+                            @if (!empty($premiumInfo))
+                                @foreach ($premiumInfo as $data)
+                                    <input type="number"
+                                        id="totalPremium"
+                                        class="h-8 border-0 focus:ring-0 focus:border-[#FFC451] focus:border-1 dark:bg-gray-800  overflow-hidden rounded-lg sm:rounded-sm text-gray-500 text-xs"
+                                        placeholder="Total Premium"
+                                        value="{{ $data }}"
+                                        readonly>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -20,29 +20,34 @@ class ExportToExcelController extends Controller
     {
         $quote = QuoteGenerate::findOrFail($id);
         $customer = Customer::findOrFail($quote->customer_id);
-        return Excel::download(new ExportCustomer($id), $customer->name .'.xlsx');
-
+        return Excel::download(new ExportCustomer($id), $customer->name . '.xlsx');
     }
 
-    public function importView(){
+    public function importView()
+    {
         $products = Product::get()->all();
         $productSections = ProductSection::get()->all();
         $productSubSections = ProductSubSection::get()->all();
-        return view('import', compact('products','productSections','productSubSections'));
+        return view('import', compact('products', 'productSections', 'productSubSections'));
     }
 
-    public function importContent(Request $request){
-        $product_uuid = $request->input('product_id');
-        $product_section_uuid = $request->input('product_section_id');
-        $product_sub_section_uuid = $request->input('product_sub_section_id');
+    public function importContent(Request $request)
+    {
+        try {
+            $product_uuid = $request->input('product_id');
+            $product_section_uuid = $request->input('product_section_id');
+            $product_sub_section_uuid = $request->input('product_sub_section_id');
 
-        $product_id = Product::where('uuid', '=', $product_uuid)->pluck('id')->first();
-        $product_section_id = ProductSection::where('uuid', '=', $product_section_uuid)->pluck('id')->first();
-        $product_sub_section_id = ProductSubSection::where('uuid', '=', $product_sub_section_uuid)->pluck('id')->first();
-        $file = $request->file('excel_file');
-        
-        Excel::import(new ProductConditionImport($product_id, $product_section_id, $product_sub_section_id), $file);
-        return redirect()->back()->with('success', 'Data imported successfully.');
+            $product_id = Product::where('uuid', '=', $product_uuid)->pluck('id')->first();
+            $product_section_id = ProductSection::where('uuid', '=', $product_section_uuid)->pluck('id')->first();
+            $product_sub_section_id = ProductSubSection::where('uuid', '=', $product_sub_section_uuid)->pluck('id')->first();
+            $file = $request->file('excel_file');
 
+            Excel::import(new ProductConditionImport($product_id, $product_section_id, $product_sub_section_id), $file);
+
+            return back()->with('success', 'Data imported successfully');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

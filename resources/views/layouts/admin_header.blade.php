@@ -118,10 +118,6 @@ transition duration-150 ease-in-out origin-top min-w-32">
                     <a class="hover:text-[#ffc451]"
                         href="{{ route('admin.createEmployee') }}">AddEmployee</a>
                 </li>
-                <li class="rounded-sm relative px-3 py-1 hover:bg-gray-100">
-                    <a class="hover:text-[#ffc451]"
-                        href="{{ route('importView') }}">Import</a>
-                </li>
                 <li class="rounded-sm relative px-3 py-1 hover:bg-gray-100"><a href="{{ route('importView') }}"
                         class="hover:text-[#ffc451]">Terms Adn Conditions</a></li>
 

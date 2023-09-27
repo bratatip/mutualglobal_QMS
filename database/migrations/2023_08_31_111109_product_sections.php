@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique()->nullable()->default(null);
             $table->integer('product_id');
-            $table->string('name');
+            $table->text('name');
             $table->timestamps();
         });
     }

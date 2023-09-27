@@ -18,18 +18,18 @@
             @csrf
             <div class="flex-block w-full">
                 <div class="flex justify-center w-full">
-                    <lable class=" w-1/4">Select Insurer</lable>
+                    <lable class="w-1/4">Select Insurer</lable>
                     <select id="insuranceCompanySelect" class="js-example-basic-multiple w-full bg-white dark:bg-gray-800 border border-gray-300 shadow-sm rounded-lg py-2 px-4 text-gray-700 text-sm focus:outline-none focus:ring focus:border-blue-300" name="insurer[]" multiple="multiple" readonly>
                         <option value="" disabled>Select an insurance company...</option>
                         @foreach ($insurers as $insurer)
-                        <option value="{{ $insurer->id }}" data-product=8 class="text-gray-700 text-sm">{{ $insurer->name }}</option>
+                        <option value="{{ $insurer->id }}" data-product={{ $quoteInfo->product_id}} class="text-gray-700 text-sm">{{ $insurer->name }}</option>
                         @endforeach
                     </select>
 
                 </div>
 
-                <input type="hidden" value="{{ $customerInfo }}" name="customerInfo">
-                <input type="hidden" value=8 name="productId">
+                <input type="hidden" value="{{ $quoteInfo->id }}" name="customerInfo">
+                <input type="hidden" value="{{ $quoteInfo->product_id}}" name="productId">
 
 
                 <div class="flex-block  w-full">
