@@ -352,11 +352,10 @@
                                 name="customer_id"
                                 id="customer_id"
                                 value="{{ old('name', $quoteData->customer->uuid ?? '') }}">
-                            <input type="text"
+                            <input type="hidden"
                                 name="quote_id"
                                 id="quote_id"
-                                value="{{ old('name', $quoteData->id ?? '') }}"
-                                hidden>
+                                value="{{ old('name', $quoteData->id ?? '') }}">
                             <div class="form-group col-md-6">
                                 <label for="customerAddress"
                                     class="text-secondary">Customer Mailing Address <span
@@ -397,7 +396,8 @@
                                     @foreach ($occupancies as $occupancy)
                                         <option value="{{ $occupancy->uuid }}"
                                             data-risk-code="{{ $occupancy->risk_code }}"
-                                            data-iib-code="{{ $occupancy->iib_code }}">
+                                            data-iib-code="{{ $occupancy->iib_code }}"
+                                            {{ old('risk_occupancy_id') == $occupancy->uuid ? 'selected' : '' }}>
                                             {{ $occupancy->risk_occupancy }}
                                         </option>
                                     @endforeach
@@ -625,6 +625,7 @@
                             name="plants_and_machines"
                             value="{{ old('plants_and_machines', $quoteData->plants_and_machines) }}"
                             {{ old('plants_and_machines', $quoteData->plants_and_machines) != 0 ? '' : 'disabled' }}>
+                            
                         <div class="additional-sub-field"
                             style="{{ old('plants_and_machines', $quoteData->plants_and_machines) != 0 ? '' : 'display: none;' }}">
                             <label>MBD</label>
@@ -949,6 +950,17 @@
                         <input type="hidden"
                             id="terrorism_hidden"
                             name="terrorism"
+                            value="0">
+                    </div>
+
+                    <div style="display: flex; align-items: center;  margin-left: 0.5rem;">
+                        <input type="checkbox"
+                            id="burglary_checkbox"
+                            style="margin-right: 0.5rem;">
+                        <label for="burglary">Burglary</label>
+                        <input type="hidden"
+                            id="burglary_hidden"
+                            name="burglary"
                             value="0">
                     </div>
                 </div>

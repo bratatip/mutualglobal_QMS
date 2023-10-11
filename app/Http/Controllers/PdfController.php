@@ -6,19 +6,11 @@ use App\Jobs\DeleteTempFileJob;
 use App\Jobs\NotificationToCustomerFinalJob;
 use Illuminate\Http\Request;
 use PDF;
-use Illuminate\Support\Facades\View;
 use App\Models\QuoteGenerate;
 use App\Models\Customer;
 use App\Models\ProductCondition;
 use App\Models\ProductSection;
-use App\Models\ProductSubSection;
-use App\Models\QuoteFinalize;
 use App\Models\RiskOccupancy;
-use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-use Barryvdh\DomPDF\PDF as DomPDFPDF;
-use Dompdf\Dompdf;
-use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 
@@ -78,6 +70,33 @@ class PdfController extends Controller
                 ->pluck('content')
                 ->toArray();
 
+
+            $productConditionsStandardFireClauses = ProductCondition::whereHas('product', function ($query) use ($quote) {
+                $query->where('id', $quote->product_id);
+            })
+                ->whereHas('productSection', function ($query) {
+                    $query->where('name', 'Standard Fire & Special Perils Policy Conditions');
+                })
+                ->whereHas('productSubSection', function ($query) {
+                    $query->where('name', 'Clauses');
+                })
+                ->pluck('content')
+                ->toArray();
+
+
+            $productConditionsStandardFireConditionsWarranties = ProductCondition::whereHas('product', function ($query) use ($quote) {
+                $query->where('id', $quote->product_id);
+            })
+                ->whereHas('productSection', function ($query) {
+                    $query->where('name', 'Standard Fire & Special Perils Policy Conditions');
+                })
+                ->whereHas('productSubSection', function ($query) {
+                    $query->where('name', 'Conditions/Warranties');
+                })
+                ->pluck('content')
+                ->toArray();
+
+
             $productSectionName = ProductSection::pluck('name')->toArray();
             $customer = Customer::findOrFail($quote->customer_id);
             $riskOccupancy = RiskOccupancy::findOrFail($quote->risk_occupancy_id);
@@ -106,6 +125,8 @@ class PdfController extends Controller
                 'productConditionsMachinery' => $productConditionsMachinery,
                 'productConditionsGlasses' => $productConditionsGlasses,
                 'productConditionsStandardFire' => $productConditionsStandardFire,
+                'productConditionsStandardFireClauses' => $productConditionsStandardFireClauses,
+                'productConditionsStandardFireConditionsWarranties' => $productConditionsStandardFireConditionsWarranties,
                 'productSectionName' => $productSectionName,
                 'finalizedInsurers' => $finalizedInsurers
             ]);
@@ -117,7 +138,7 @@ class PdfController extends Controller
 
                     $toEmail = is_array($quote->customer->email) ? implode(', ', $quote->customer->email) : $quote->customer->email;
                     $attachmentPaths = $tempPdfPath;
-                    
+
                     dispatch(new NotificationToCustomerFinalJob($toEmail, $attachmentPaths));
 
                     Queue::later(now()->addSeconds(120), new DeleteTempFileJob($tempPdfPath));

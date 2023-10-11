@@ -69,20 +69,6 @@
             window.location.href = "/quote_view/" + quoteId;
         }
     });
-
-
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     const rows = document.querySelectorAll("tbody tr");
-
-    //     rows.forEach(row => {
-    //         row.addEventListener("click", function() {
-    //             const quoteId = row.dataset.quoteId;
-    //             if (quoteId) {
-    //                 window.location.href = "/quote_view/" + quoteId;
-    //             }
-    //         });
-    //     });
-    // });
 </script>
 
 @endsection

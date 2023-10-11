@@ -8,6 +8,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExportToExcelController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\Quote\Car\CarQuoteController;
 use App\Http\Controllers\QuoteCloserController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\QuoteConvertController;
@@ -38,33 +39,32 @@ Route::middleware('adminOrEmployee')->group(function () {
         Route::post('/import-content', [ExportToExcelController::class, 'importContent'])->name('importContents');
         Route::get('/import-view', [ExportToExcelController::class, 'importView'])->name('importView');
         Route::delete('/customers/{id}', [CustomerController::class, 'destroyCustomre'])->name('customer.destroy');
-        Route::get('/insurer-emails-management',[InsurerEmailsManagementController::class,'showForm'])->name('admin.insurer-emails-management-show');
-        Route::get('/add-riskoccupancy',[SettingsController::class,'addRiskOccupancy'])->name('admin.add-riskoccupancy');
-        Route::post('/import-riskoccupancy',[SettingsController::class,'storeRiskOccupancy'])->name('admin.store-riskoccupancy');
-        
+        Route::get('/insurer-emails-management', [InsurerEmailsManagementController::class, 'showForm'])->name('admin.insurer-emails-management-show');
+        Route::get('/add-riskoccupancy', [SettingsController::class, 'addRiskOccupancy'])->name('admin.add-riskoccupancy');
+        Route::post('/import-riskoccupancy', [SettingsController::class, 'storeRiskOccupancy'])->name('admin.store-riskoccupancy');
+
         # Admin Employees Routes
-        Route::get('/create-employee',[EmployeeController::class, 'createEmployee'])->name('admin.createEmployee');
-        Route::post('/store-employee',[EmployeeController::class, 'storeEmployee'])->name('admin.storeEmployee');
-        
+        Route::get('/create-employee', [EmployeeController::class, 'createEmployee'])->name('admin.createEmployee');
+        Route::post('/store-employee', [EmployeeController::class, 'storeEmployee'])->name('admin.storeEmployee');
+
         # Product And Category Management Routes
-        Route::get('/manage-products',[SettingsController::class, 'manageProducts'])->name('admin.manageProducts');
-        Route::post('/store-category',[SettingsController::class, 'storeCategory'])->name('admin.storeCategory');
-        Route::post('/delete-category',[SettingsController::class, 'destroyCategory'])->name('admin.destroyCategory');
-        Route::post('/store-products',[SettingsController::class, 'storeProducts'])->name('admin.storeProducts');
-        Route::post('/delete-products',[SettingsController::class, 'destroyCategory'])->name('admin.destroyProducts');
+        Route::get('/manage-products', [SettingsController::class, 'manageProducts'])->name('admin.manageProducts');
+        Route::post('/store-category', [SettingsController::class, 'storeCategory'])->name('admin.storeCategory');
+        Route::post('/delete-category', [SettingsController::class, 'destroyCategory'])->name('admin.destroyCategory');
+        Route::post('/store-products', [SettingsController::class, 'storeProducts'])->name('admin.storeProducts');
+        Route::post('/delete-products', [SettingsController::class, 'destroyCategory'])->name('admin.destroyProducts');
 
 
         #  Insurers and Emails Management Routes
-        Route::get('/manage-insurers',[SettingsController::class,'manageInsurersAndEmails'])->name('admin.manageInsurersAndEmails');
-        Route::post('/add-insurers',[SettingsController::class,'storeInsurers'])->name('admin.storeInsurers');
-        Route::post('/add-emails',[SettingsController::class,'storeEmails'])->name('admin.storeEmails');
+        Route::get('/manage-insurers', [SettingsController::class, 'manageInsurersAndEmails'])->name('admin.manageInsurersAndEmails');
+        Route::post('/add-insurers', [SettingsController::class, 'storeInsurers'])->name('admin.storeInsurers');
+        Route::post('/add-emails', [SettingsController::class, 'storeEmails'])->name('admin.storeEmails');
 
-        Route::post('/add-productSections',[SettingsController::class,'storeProductSections'])->name('admin.storeProductSections');
-
+        Route::post('/add-productSections', [SettingsController::class, 'storeProductSections'])->name('admin.storeProductSections');
     });
 
 
-    Route::get('/logout',[LoginController::class, 'logOut'])->name('logOut');
+    Route::get('/logout', [LoginController::class, 'logOut'])->name('logOut');
 
     Route::get('/quote/{uuid}', [CustomerController::class, 'quote'])->name('fire.quoteGenerate');
 
@@ -97,17 +97,11 @@ Route::middleware('adminOrEmployee')->group(function () {
     Route::get('/quote_list', [CustomerController::class, 'quoteList'])->name('quoteList');
 
     Route::get('/export-customer/{id}', [ExportToExcelController::class, 'exportToExcel'])->name('exportCustomer');
-   
+
     Route::get('/create-notification-form/{id}', [NotificationController::class, 'createNotificationForm'])->name('notificationForm');
     Route::post('/send-attachment-email', [NotificationController::class, 'sendNotification'])->name('send-attachment-email');
     Route::get('/get-emails', [NotificationController::class, 'getEmails'])->name('get-emails');
 
-    # Routes for CAR PRODUCTS
-    Route::view('/car-quoteGenerate','quoteFire')->name('car.quoteGenerate');
-
-    // TEST ROUTING
-
-    Route::view('/test-add-quote', 'quote.quoteFire.quoteFire');
 
     Route::get('/final-quote/{id}', [QuoteController::class, 'finalizeQuoteGet'])->name('finalize-quote');
     Route::post('/final-quote', [QuoteController::class, 'finalizeQuote'])->name('quote-finalize');
@@ -128,5 +122,22 @@ Route::middleware('adminOrEmployee')->group(function () {
     Route::post('/closer-quote', [QuoteCloserController::class, 'policyStore'])->name('closer-quote-post');
 
 
-    
+
+    # Routes for ENGINEERING PRODUCTS
+    # -------------------------------- CAR ROUTES --------------------------------------------------
+    Route::get('/car-quoteForm/{uuid}', [CarQuoteController::class, 'formView'])->name('car.quoteGenerate');
+    Route::post('/car-quoteStore', [CarQuoteController::class, 'quoteStore'])->name('car.quoteStore');
+
+    # -------------------------------- EAR ROUTS--------------------------------------------------
+    // Route::get('/ear-quoteGenerate',[CarQuoteController::class, 'formView'])->name('ear.quoteGenerate');
+
+
+    # -------------------------------- CPM ROUTS--------------------------------------------------
+    // Route::get('/cpm-quoteGenerate',[CarQuoteController::class, 'formView'])->name('cpm.quoteGenerate');
+
+
+
+
+
+
 });
