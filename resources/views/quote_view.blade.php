@@ -1,29 +1,18 @@
 @extends('layouts.master')
 
 @section('content')
-    @if ($errors->any())
-        <div class="text-red-500 text-xs mt-2">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    @include('common.partials._messages')
 
-    @if (session('error'))
-        <div class="text-red-500 text-xs mt-2">
-            {{ session('error') }}
-        </div>
-    @endif
     <div class="flex flex-wrap justify-center">
         <nav class="flex flex-wrap justify-center -mx-4  p-6 max-md:p-2">
             <ol class="list-none p-0 inline-flex">
                 <li class="flex items-center">
-                    <a href="{{ route('notificationForm', ['id' => $quote->uuid]) }}"
-                        class="text-[#0F628B] hover:text-orange-500 text-xs font-bold">
-                        Quote To Insurer
-                    </a>
+                    {!! $quote->convertedInsurer->isEmpty()
+                        ? '<a href="' .
+                            route('notificationForm', ['id' => $quote->uuid]) .
+                            '" class="text-[#0F628B] hover:text-orange-500 text-xs font-bold">Quote To Insurer</a>'
+                        : '<span class="text-[#0F628B] text-xs font-bold cursor-not-allowed" aria-disabled="true">Quote To Insurer</span>' !!}
+
                     <svg class="h-4 w-4 mx-1"
                         fill="none"
                         stroke="currentColor"
@@ -36,10 +25,13 @@
                     </svg>
                 </li>
                 <li class="flex items-center">
-                    <a href="{{ route('finalize-quote', ['id' => $quote->id]) }}"
-                        class="text-[#0F628B] hover:text-orange-500 text-xs font-bold">
-                        Quote To Customer
-                    </a>
+
+                    {!! !$quote->convertedInsurer->isEmpty()
+                        ? '<span class="text-[#0F628B] text-xs font-bold cursor-not-allowed" aria-disabled="true">Quote To Customer</span>'
+                        : '<a href="' .
+                            route('finalize-quote', ['id' => $quote->id]) .
+                            '" class="text-[#0F628B] hover:text-orange-500 text-xs font-bold">Quote To Customer</a>' !!}
+
                     <svg class="h-4 w-4 mx-1"
                         fill="none"
                         stroke="currentColor"
@@ -52,10 +44,12 @@
                     </svg>
                 </li>
                 <li class="flex items-center">
-                    <a href="{{ route('convert-quote', ['id' => $quote->id]) }}"
-                        class="text-[#0F628B] hover:text-orange-500 text-xs font-bold">
-                        Quote Convertion
-                    </a>
+                    {!! !$quote->convertedInsurer->isEmpty()
+                        ? '<span class="text-[#0F628B] text-xs font-bold cursor-not-allowed" aria-disabled="true">Quote Conversion</span>'
+                        : '<a href="' .
+                            route('convert-quote', ['id' => $quote->id]) .
+                            '" class="text-[#0F628B] hover:text-orange-500 text-xs font-bold">Quote Conversion</a>' !!}
+
                     <svg class="h-4 w-4 mx-1"
                         fill="none"
                         stroke="currentColor"
@@ -80,11 +74,16 @@
     <div class="flex p-5 pt-0 mt-[-50px] justify-center max-md:pt-[40px]">
         <div class="flex flex-wrap w-1/2 -mx-4 mb-6 p-6 max-md:p-2 bg-zinc-100 border border-solid shadow-2xl rounded-2xl">
             <div class="w-full flex justify-end px-4 mb-3 max-md:w-full">
-                <a href="{{ route('quote.edit', ['id' => $quote->id]) }}"
-                    id="downloadPdfButton"
-                    class="logout_button block px-6 py-2 mt-3 border border-solid rounded-2xl text-orange-500 text-xs text-[#0F628B] hover:bg-gray-100 ml-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold ">
-                    Edit
-                </a>
+                {!! !$quote->convertedInsurer->isEmpty()
+                    ? '<span class="text-[#0F628B] text-xs font-bold cursor-not-allowed" aria-disabled="true">Edit</span>'
+                    : '<a href="' .
+                        route('quote.edit', ['id' => $quote->id]) .
+                        '"
+                                                        id="downloadPdfButton"
+                                                        class="logout_button block px-6 py-2 mt-3 border border-solid rounded-2xl text-orange-500 text-xs text-[#0F628B] hover:bg-gray-100 ml-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold">
+                                                        Edit
+                                                    </a>' !!}
+
             </div>
 
 
@@ -223,32 +222,6 @@
                 <div class="font-bold  text-[#0F628B] text-xs">Basement risk:</div>
                 <div class="text-gray-500 text-xs">{{ $quote->basement_risk === 1 ? 'Yes' : 'No' }}</div>
             </div>
-
-
-
-
-            <!-- <div class="flex justify-center  flex-row">
-                <a href="{{ route('exportCustomer', ['id' => $quote->id]) }}" class="inline px-6 py-2 mt-3 border text-green-500 border-solid rounded-2xl bg-white text-xs text-[#0F628B] hover:bg-gray-100 ml-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold">
-                    <i class="fa fa-file-excel mr-2"></i>Export to Excel
-                </a>
-                <a href="{{ route('notificationForm', ['id' => $quote->id]) }}" class="inline px-6 py-2 mt-3 border border-solid rounded-2xl  bg-white text-xs text-[#0F628B] hover:no-underline ml-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold">
-                    <i class="fas fa-envelope mr-2"></i>Send Mail
-                </a>
-
-                <a href="{{ route('finalize-quote', ['id' => $quote->id]) }}" class="inline px-6 py-2 mt-3 border border-solid rounded-2xl  bg-white text-xs text-[#0F628B] hover:no-underline ml-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold">
-                    <i class="fa fa-flag-checkered mr-2" aria-hidden="true"></i>Finalize
-                </a>
-
-                <a href="{{ route('convert-quote', ['id' => $quote->id]) }}" class="inline px-6 py-2 mt-3 border border-solid rounded-2xl  bg-white text-xs text-[#0F628B] hover:no-underline ml-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold">
-                    <i class="fas fa-exchange-alt mr-2"></i>Convert
-                </a>
-
-                <a href="{{ route('closer-quote', ['id' => $quote->id]) }}" class="inline px-6 py-2 mt-3 border border-solid rounded-2xl  bg-white text-xs text-[#0F628B] hover:no-underline ml-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white font-bold">
-                    <i class="fa fa-lock mr-2"></i> Closer
-                </a>
-
-            </div> -->
-
 
 
         </div>

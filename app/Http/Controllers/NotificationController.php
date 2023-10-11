@@ -105,7 +105,7 @@ class NotificationController extends Controller
         //     dispatch(new NotificationToInsurerJob($email, $attachmentPath));
         // }
         Storage::delete($excelFilePath);
-        return redirect()->back()->with('success', 'Email sent with attachment.');
+        return redirect()->route('quote.view',['id' =>$quote->uuid ])->with('success', 'Email sent with attachment.');
     }
 
 
