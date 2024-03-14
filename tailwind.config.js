@@ -40,9 +40,9 @@ module.exports = {
       inherit: "inherit",
     },
   },
-  corePlugins: {
-    preflight: false,
-  },
+  // corePlugins: {
+  //   preflight: false,
+  // },
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
