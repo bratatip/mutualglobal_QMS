@@ -19,7 +19,7 @@
             @include('layouts.employee_header')
         @endif
 
-        <main class="flex-grow">
+        <main class="flex-grow mt-[100px]">
             @yield('content')
         </main>
 
