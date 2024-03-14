@@ -7,6 +7,7 @@
             content="width=device-width, initial-scale=1.0">
         @include('layouts.js_cdn')
         @vite('resources/css/app.css')
+        {{-- @vite('resources/css/breadcrumb.css') --}}
 
     </head>
 
@@ -18,7 +19,7 @@
             @include('layouts.employee_header')
         @endif
 
-        <main class="flex-grow mt-[100px]">
+        <main class="flex-grow">
             @yield('content')
         </main>
 

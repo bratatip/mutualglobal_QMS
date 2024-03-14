@@ -13,6 +13,8 @@
 </div>
 @endif
 
+{{ Breadcrumbs::render('add') }}
+
 <!-- <div class="center-screen w-100"> -->
 <div class="flex flex-wrap justify-center py-5 px-48">
     <div class="flex flex-wrap -mx-4 mb-6 p-6 max-md:p-2 bg-zinc-100 border border-solid shadow-2xl rounded">

@@ -1,0 +1,17 @@
+/* Remove background color from ol */
+nav ol {
+    background-color: transparent !important;
+    /* or you can just remove the bg-gray-300 class */
+}
+
+nav ol li.text-gray-500 {
+    visibility: hidden;
+    position: relative;
+}
+
+nav ol li.text-gray-500::after {
+    visibility: visible;
+    position: absolute;
+    left: 4px;
+    content: ">>";
+}

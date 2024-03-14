@@ -1,7 +1,7 @@
 <header class="bg-[#151515] fixed top-0 left-0 w-full z-50">
     <nav class="flex justify-start items-center w-[92%]  mx-auto relative">
         <div>
-            <a href="/">
+            <a href="#">
                 <img class="w-46 h-[70px] p-3 cursor-pointer"
                     src="/images/logo_mg1.png"
                     alt="...">

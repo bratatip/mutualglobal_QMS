@@ -1,7 +1,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="icon"
+{{-- <link rel="icon"
     type="image/x-icon"
-    href="/images/favicon.png">
+    href="/images/favicon.png"> --}}
 
 
 <!-- FONTS -->
