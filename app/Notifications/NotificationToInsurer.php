@@ -87,7 +87,7 @@ class NotificationToInsurer extends Notification
 
         return (new MailMessage)
         ->cc($ccEmails)
-        ->from('mutualglobal@gmail.com', 'Barrett Blair')
+        ->from('mutualglobal@gmail.com')
         ->subject($emailSubject)
         ->markdown('admin.email.custom_notification', [
             'emailBody' => $this->emailBody,

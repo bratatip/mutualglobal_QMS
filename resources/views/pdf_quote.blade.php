@@ -80,7 +80,7 @@
                     <span style="border-bottom: 2px solid #F7B902;">
                         With us master the risk Complexities that comes with it
                     </span><br>
-                    Your customized quote for
+                    Quote For {{ $quote->product->name }}
                 </strong>
             </div>
 
