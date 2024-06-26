@@ -23,7 +23,7 @@
             @include('layouts.employee_header')
         @endif
     @endauth
-    <main class="flex-grow mt-4">
+    <main class="flex-grow mt-5">
         @yield('content')
     </main>
 
