@@ -20,21 +20,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Get the Admin role ID
-        $adminRoleId = DB::table('roles')->where('name', 'admin')->first()->id;
-
-        // Insert admin user with role_id
-        DB::table('users')->insert([
-            'uuid' => UuidGeneratorHelper::generateUniqueUuidForTable('users'),
-            'name' => 'Super Admin',
-            'email' => env('SEEDER_ADMIN_EMAIL'),
-            'phone' => '1234567890',
-            'password' => Hash::make(env('SEEDER_ADMIN_PASSWORD')),
-            'role_id' => $adminRoleId,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
+        $this->call([
+            // UserSeeder::class,
+            // TestSeeder::class
+            CategoriesAndProductsSeeder::class,
         ]);
 
-        $this->command->info('Admin Done');
+        $this->command->info('( Admin || User || Client ) && Test Seeder Done');
     }
 }

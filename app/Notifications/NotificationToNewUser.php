@@ -50,7 +50,7 @@ class NotificationToNewUser extends Notification
             ->line('Welcome to our application!')
             ->line('You have been registered as a new user.')
             ->line('Your password: ' . $password)
-            ->action('Login to Your Account', url('/login'))
+            ->action('Login to Your Account', url('/'))
             ->line('Thank you for using our application!');
     }
 

@@ -23,7 +23,7 @@ class EmployeeOrAdminMiddleware
                 return $next($request);
             } else {
                 auth()->logout();
-                return redirect('/login');
+                return redirect('/');
             }
         }
         $errorMessage = "Unauthorized Access! Please contact the admin.";

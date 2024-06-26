@@ -1,4 +1,6 @@
 @import './breadcrumb.css';
+@import './data_table.css';
+@import './dt.css';
 
 @tailwind base;
 @tailwind components;

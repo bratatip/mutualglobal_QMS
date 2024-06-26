@@ -1,4 +1,4 @@
-<header class="container mx-auto px-4  flex items-center justify-between">
+<header class="container mx-auto px-4  flex items-center justify-between shadow-2xl z-10">
     <a href="#"
        class="font-bold text-white text-xl"><img class=" w-48 h-[80px] p-3 cursor-pointer"
              src="/images/brand.png"
@@ -8,10 +8,10 @@
             <li class="relative group px-3 py-2">
                 <button class="hover:opacity-50 cursor-pointer p-1">Products</button>
                 <div
-                     class="absolute top-0 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 hidden group-hover:opacity-100 group-hover:block duration-500 ease-in-out group-hover:transform z-50 min-w-[560px] transform">
+                     class="absolute top-4 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 hidden group-hover:opacity-100 group-hover:block duration-500 ease-in-out group-hover:transform z-50 min-w-[560px] transform">
                     <div class="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
                         <div
-                             class="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 translate-x-0 transition-transform group-hover:translate-x-[12rem] duration-500 ease-in-out rounded-sm">
+                             class="w-10 h-10 bg-white transform rotate-45 absolute top-0 -z-10 translate-x-0 transition-transform group-hover:translate-x-[12rem] duration-500 ease-in-out rounded-sm shadow-xl">
                         </div>
 
                         <div class="relative z-10">
@@ -25,6 +25,7 @@
                                                class="block p-2 -mx-2 rounded-lg hover:bg-gradient-to-br hover:from-indigo-50 hover:to-pink-50 hover:via-blue-50 transition ease-in-out duration-300 text-gray-800 font-semibold hover:text-indigo-600">
                                                 Course Editor
                                                 <p class="text-gray-500 font-normal">All-in-one editor</p>
+                                                <p class="text-gray-500 font-normal">All-in-one editor 02</p>
                                             </a>
                                         </li>
                                         <li>
@@ -80,7 +81,7 @@
             <li class="relative group px-3 py-2">
                 <button class="hover:opacity-50 cursor-pointer p-1">Solutions</button>
                 <div
-                     class="absolute top-0 -left-2 transition group-hover:translate-y-5 translate-y-0 opacity-0 hidden group-hover:opacity-100 group-hover:block duration-500 ease-in-out group-hover:transform z-50 min-w-[260px] transform">
+                     class="absolute top-4 -left-2 transition group-hover:translate-y-5 translate-y-0 opacity-0 hidden group-hover:opacity-100 group-hover:block duration-500 ease-in-out group-hover:transform z-50 min-w-[260px] transform">
                     <div class="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
                         <div
                              class="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 -translate-x-4 transition-transform group-hover:translate-x-3 duration-500 ease-in-out rounded-sm">
@@ -126,7 +127,7 @@
             <li class="relative group px-3 py-2">
                 <button class="hover:opacity-50 cursor-pointer p-1">Developers</button>
                 <div
-                     class="absolute top-0 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 hidden group-hover:opacity-100 group-hover:block duration-500 ease-in-out group-hover:transform z-50 min-w-[560px] transform">
+                     class="absolute top-4 -left-48 transition group-hover:translate-y-5 translate-y-0 opacity-0 hidden group-hover:opacity-100 group-hover:block duration-500 ease-in-out group-hover:transform z-50 min-w-[560px] transform">
                     <div class="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
                         <div
                              class="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 translate-x-0 transition-transform group-hover:translate-x-[12.65rem] duration-500 ease-in-out rounded-sm">
@@ -207,7 +208,7 @@
             <li class="relative group px-3 py-2">
                 <button class="hover:opacity-50 cursor-pointer p-1">Resources</button>
                 <div
-                     class="absolute top-0 -left-2 transition group-hover:translate-y-5 translate-y-0 opacity-0 hidden group-hover:opacity-100 group-hover:block duration-500 ease-in-out group-hover:transform z-50 min-w-[200px] transform">
+                     class="absolute top-4 -left-2 transition group-hover:translate-y-5 translate-y-0 opacity-0 hidden group-hover:opacity-100 group-hover:block duration-500 ease-in-out group-hover:transform z-50 min-w-[200px] transform">
                     <div class="relative top-6 p-6 bg-white rounded-xl shadow-xl w-full">
                         <div
                              class="w-10 h-10 bg-white transform rotate-45 absolute top-0 z-0 -translate-x-4 transition-transform group-hover:translate-x-3 duration-500 ease-in-out rounded-sm">
@@ -282,3 +283,27 @@
         </ul>
     </nav>
 </header>
+
+<div
+     class="fixed top-auto bottom-0 h-full w-full backdrop-blur opacity-0 pointer-events-none transition-opacity duration-300">
+</div>
+
+<style>
+    /* Additional CSS classes */
+    .backdrop-show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+</style>
+<script>
+    $(document).ready(function() {
+        $('.group').hover(
+            function() {
+                $('.backdrop-blur').addClass('backdrop-show');
+            },
+            function() {
+                $('.backdrop-blur').removeClass('backdrop-show');
+            }
+        );
+    });
+</script>

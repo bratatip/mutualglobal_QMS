@@ -9,10 +9,20 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'uuid','name'];
+    protected $fillable = ['name', 'slug'];
+
+    public static function getAllRole()
+    {
+        return Role::all();
+    }
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTomany(User::class, 'users_roles');
+    }
+
+    public function permissions()
+    {
+        return $this->belongsTomany(Permission::class, 'roles_permissions');
     }
 }

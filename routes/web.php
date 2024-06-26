@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\InsurerEmailsManagementController;
 use App\Http\Controllers\Admin\SettingsController;
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ExportToExcelController;
 use App\Http\Controllers\NotificationController;
@@ -25,46 +26,77 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect(route('login'));
+# Routes for AUTH
+#-------------------------------------------------------------
+
+// Route::get('/', function () {
+//     return redirect(route('login'));
+// });
+
+
+Route::get('/', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/dologin', [AuthController::class, 'doLogin'])->name('doLogin');
+Route::middleware(['auth'])->get('/logout', [AuthController::class, 'logOut'])->name('logOut');
+
+# Routes for ADMIN
+#-------------------------------------------------------------
+
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+
+    # Dashboard Route
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+
+    # Admin Employees Routes
+    Route::get('/employee-list', [EmployeeController::class, 'index'])->name('admin.employeeList');
+    Route::get('/json', [EmployeeController::class, 'tableJson'])->name('employeeJson');
+
+    Route::get('/create-employee', [EmployeeController::class, 'createEmployee'])->name('admin.createEmployee');
+    Route::post('/store-employee', [EmployeeController::class, 'storeEmployee'])->name('admin.storeEmployee');
+
+
+    Route::post('/import-content', [ExportToExcelController::class, 'importContent'])->name('importContents');
+    Route::get('/import-view', [ExportToExcelController::class, 'importView'])->name('importView');
+    Route::delete('/customers/{id}', [CustomerController::class, 'destroyCustomre'])->name('customer.destroy');
+    Route::get('/insurer-emails-management', [InsurerEmailsManagementController::class, 'showForm'])->name('admin.insurer-emails-management-show');
+    Route::get('/add-riskoccupancy', [SettingsController::class, 'addRiskOccupancy'])->name('admin.add-riskoccupancy');
+    Route::post('/import-riskoccupancy', [SettingsController::class, 'storeRiskOccupancy'])->name('admin.store-riskoccupancy');
+
+
+    #  Insurers and Emails Management Routes
+    Route::get('/manage-insurers', [SettingsController::class, 'manageInsurersAndEmails'])->name('admin.manageInsurersAndEmails');
+    Route::post('/add-insurers', [SettingsController::class, 'storeInsurers'])->name('admin.storeInsurers');
+    Route::post('/add-emails', [SettingsController::class, 'storeEmails'])->name('admin.storeEmails');
+
+    Route::post('/add-productSections', [SettingsController::class, 'storeProductSections'])->name('admin.storeProductSections');
+
+
+    # Product And Category Management Routes
+    Route::get('/manage-products', [SettingsController::class, 'manageProducts'])->name('admin.manageProducts');
+    Route::post('/store-category', [SettingsController::class, 'storeCategory'])->name('admin.storeCategory');
+    Route::post('/delete-category', [SettingsController::class, 'destroyCategory'])->name('admin.destroyCategory');
+    Route::post('/store-products', [SettingsController::class, 'storeProducts'])->name('admin.storeProducts');
+    Route::post('/delete-products', [SettingsController::class, 'destroyCategory'])->name('admin.destroyProducts');
 });
 
-Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
-Route::post('/dologin', [LoginController::class, 'doLogin'])->name('doLogin');
+
+# Routes For EMPLOYEE
+#-------------------------------------------------------------
+
+# Routes For ADMIN && EMPLOYEE 
+#-------------------------------------------------------------
+Route::middleware(['auth', 'role:employee,admin'])->group(function () {
+});
 
 
-Route::middleware('adminOrEmployee')->group(function () {
-
-    Route::middleware('admin')->prefix('admin')->group(function () {
-        Route::post('/import-content', [ExportToExcelController::class, 'importContent'])->name('importContents');
-        Route::get('/import-view', [ExportToExcelController::class, 'importView'])->name('importView');
-        Route::delete('/customers/{id}', [CustomerController::class, 'destroyCustomre'])->name('customer.destroy');
-        Route::get('/insurer-emails-management', [InsurerEmailsManagementController::class, 'showForm'])->name('admin.insurer-emails-management-show');
-        Route::get('/add-riskoccupancy', [SettingsController::class, 'addRiskOccupancy'])->name('admin.add-riskoccupancy');
-        Route::post('/import-riskoccupancy', [SettingsController::class, 'storeRiskOccupancy'])->name('admin.store-riskoccupancy');
-
-        # Admin Employees Routes
-        Route::get('/create-employee', [EmployeeController::class, 'createEmployee'])->name('admin.createEmployee');
-        Route::post('/store-employee', [EmployeeController::class, 'storeEmployee'])->name('admin.storeEmployee');
-
-        # Product And Category Management Routes
-        Route::get('/manage-products', [SettingsController::class, 'manageProducts'])->name('admin.manageProducts');
-        Route::post('/store-category', [SettingsController::class, 'storeCategory'])->name('admin.storeCategory');
-        Route::post('/delete-category', [SettingsController::class, 'destroyCategory'])->name('admin.destroyCategory');
-        Route::post('/store-products', [SettingsController::class, 'storeProducts'])->name('admin.storeProducts');
-        Route::post('/delete-products', [SettingsController::class, 'destroyCategory'])->name('admin.destroyProducts');
 
 
-        #  Insurers and Emails Management Routes
-        Route::get('/manage-insurers', [SettingsController::class, 'manageInsurersAndEmails'])->name('admin.manageInsurersAndEmails');
-        Route::post('/add-insurers', [SettingsController::class, 'storeInsurers'])->name('admin.storeInsurers');
-        Route::post('/add-emails', [SettingsController::class, 'storeEmails'])->name('admin.storeEmails');
-
-        Route::post('/add-productSections', [SettingsController::class, 'storeProductSections'])->name('admin.storeProductSections');
-    });
+# Routes For CLIENT
+#-------------------------------------------------------------
 
 
-    Route::get('/logout', [LoginController::class, 'logOut'])->name('logOut');
+
+Route::middleware(['auth', 'role:employee,admin'])->group(function () {
 
     Route::get('/quote/{uuid}', [CustomerController::class, 'quote'])->name('fire.quoteGenerate');
 
@@ -85,7 +117,7 @@ Route::middleware('adminOrEmployee')->group(function () {
     // search for autopopulate on renew customer
     Route::get('/search-quote', [CustomerController::class, 'quoteAutopopulateOnRenew'])->name('search.quoteAutopopulate');
 
-    Route::post('/quote', [CustomerController::class, 'quoteStore'])->name('quote.generate');
+    Route::get('/quote', [CustomerController::class, 'quoteStore'])->name('quote.generate');
     Route::get('/quote-edit/{id}', [CustomerController::class, 'quoteEdit'])->name('quote.edit');
 
 
@@ -122,6 +154,8 @@ Route::middleware('adminOrEmployee')->group(function () {
     Route::post('/closer-quote', [QuoteCloserController::class, 'policyStore'])->name('closer-quote-post');
 
 
+    # Routes for FIRE PRODUCTS
+    
 
     # Routes for ENGINEERING PRODUCTS
     # -------------------------------- CAR ROUTES --------------------------------------------------
@@ -134,10 +168,5 @@ Route::middleware('adminOrEmployee')->group(function () {
 
     # -------------------------------- CPM ROUTS--------------------------------------------------
     // Route::get('/cpm-quoteGenerate',[CarQuoteController::class, 'formView'])->name('cpm.quoteGenerate');
-
-
-
-
-
 
 });

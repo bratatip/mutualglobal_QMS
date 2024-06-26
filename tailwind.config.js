@@ -12,14 +12,14 @@ module.exports = {
     extend: {
       backgroundImage: {
         // 'admin-login-bg': "config('app.url')/images/admin_login_bg.png",
-        // 'pss-orange-gradient': 'linear-gradient(180deg, #E25E14 33.33%, #B34B11 100%)',
-        // 'pss-blue-gradient': 'linear-gradient(180deg, #0E5D85 0%, #1C8AC0 100%)',
-        // 'pss-website-logo': "url('/images/logo.svg')",
-        // 'pss-white-gradient' : 'linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.996823) 0.52%, rgba(255, 255, 255, 0.79) 100%)',
+        'mgibq-orange-gradient': 'linear-gradient(180deg, #E25E14 33.33%, #B34B11 100%)',
+        'mgibq-blue-gradient': 'linear-gradient(180deg, #0E5D85 0%, #1C8AC0 100%)',
+        'mgibq-website-logo': "url('/images/logo.svg')",
+        'mgibq-white-gradient' : 'linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.996823) 0.52%, rgba(255, 255, 255, 0.79) 100%)',
       },
 
       colors: {
-        // 'pss-blue': '#0F628B',
+        'mgibq-blue': '#0F628B',
         // 'yellow':'#eab308',
         white: "#fff",
         black: "#000",
@@ -31,7 +31,7 @@ module.exports = {
         inter: "Inter",
       },
       boxShadow: {
-        // 'pss-box-shadow': '0px 2px 4px rgba(0, 0, 0, 0.25)',
+        'mgibq-box-shadow': '0px 2px 4px rgba(0, 0, 0, 0.25)',
       }
     },
     fontSize: {

@@ -17,23 +17,17 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->unique()->nullable()->default(null);
             $table->string('name')->unique();
+            $table->string('slug')->unique();
             $table->timestamps();
         });
 
+        // Inserting initial roles
         DB::table('roles')->insert([
-            ['name' => 'admin'],
-            ['name' => 'employee'],
-            ['name' => 'client'],
+            ['name' => 'Admin', 'slug' => 'admin'],
+            ['name' => 'Employee', 'slug' => 'employee'],
+            ['name' => 'Client', 'slug' => 'client'],
         ]);
-
-        $roles = DB::table('roles')->get();
-
-        foreach ($roles as $role) {
-            $uuid = Uuid::uuid4()->toString();
-            DB::table('roles')->where('id', $role->id)->update(['uuid' => $uuid]);
-        }
     }
 
     /**

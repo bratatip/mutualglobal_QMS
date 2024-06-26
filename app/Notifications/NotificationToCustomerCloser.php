@@ -47,7 +47,7 @@ class NotificationToCustomerCloser extends Notification
         return (new MailMessage)
             // ->cc($ccEmails)
             ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/login'))
+            ->action('Notification Action', url('/'))
             ->line('Thank you for using our application!')
             ->attach(storage_path('app/' . $attachmentPath));
 

@@ -23,12 +23,13 @@ class RegistrationService
 
             $uuid = UuidGeneratorHelper::generateUniqueUuidForTable('users');
             $password = PasswordGeneratorHelper::generateUniquePasswordForTable('users', 'password', 8);
+            $managerId = isset($data['manager_id']) ? User::where('uuid', $data['manager_id'])->value('id') : null;
 
 
             $user = User::create([
-                'role_id' => Role::where('name', '=', $role)->pluck('id')->first(),
                 'uuid' =>  $uuid,
                 'name' => $data['name'],
+                'manager_id' => $managerId,
                 'email' => $data['email'],
                 'phone' => $data['phone'],
                 'password' => Hash::make($password),
@@ -36,6 +37,8 @@ class RegistrationService
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
+
+            $user->roles()->sync($role);
 
             DB::commit();
 

@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Traits\HasPermissionsTrait;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasPermissionsTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -19,14 +22,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'uuid',
-        'role_id',
+        'manager_id',
         'name',
         'email',
-        'email_verified_at',
         'phone',
         'password',
-        
-    ]; 
+        'status',
+
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,13 +51,23 @@ class User extends Authenticatable
     ];
 
 
-    public function role()
+    public function roles()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class, 'users_roles', 'user_id', 'role_id');
     }
 
-    public function hasRole($role)
+    public function permission()
     {
-        return $this->role->name == $role;
+        return $this->belongsToMany(Permission::class, 'users_permissions', 'user_id', 'permission_id');
+    }
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class, 'manager_id');
+    }
+
+    public function subordinates()
+    {
+        return $this->hasMany(User::class, 'manager_id');
     }
 }

@@ -72,12 +72,10 @@ class CustomerController extends Controller
         // $productId = Product::where('uuid', '=', $id)->pluck('id')->first();
         $productId = $id;
         $occupancies = RiskOccupancy::all();
-        $employees = User::join('roles', 'users.role_id', '=', 'roles.id')
-            ->whereIn('roles.name', ['admin', 'employee'])
-            ->select('users.uuid', 'users.name', 'users.email', 'users.phone')
-            ->get();
+        $employees = User::get();
         $products = Product::all();
         $quoteData = new QuoteGenerate();
+        
         // if ($id !== null) {
         //     $quoteData = QuoteGenerate::with('customer', 'riskOccupancy')->find($id);
         // } else {
